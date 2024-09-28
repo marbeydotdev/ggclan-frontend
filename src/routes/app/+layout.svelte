@@ -5,13 +5,13 @@
 	import { get } from 'svelte/store';
 
 	$: {
-		if (browser && token){
-			if (get(token) === null){
-				goto("/")
+		if (browser && token) {
+			if (get(token) === null) {
+				goto('/');
 			}
 		}
 	}
 
 </script>
 
-<slot/>
+<slot />

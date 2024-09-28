@@ -1,32 +1,30 @@
-import { Auth0Client, createAuth0Client } from '@auth0/auth0-spa-js';
-import { get, type Writable, writable } from 'svelte/store';
+import { createAuth0Client } from '@auth0/auth0-spa-js';
+import { type Writable, writable } from 'svelte/store';
 import { goto } from '$app/navigation';
-import { authHeaders, getMe, type User } from '$lib/api';
-import {browser} from '$app/environment';
-import axios from 'axios';
-import { settings } from '$lib/configuration';
-
-
+import { getMe, type User } from '$lib/api';
+import { browser } from '$app/environment';
 
 export let token: Writable<string | null>;
 export let user: Writable<User | null>;
+export const ready: Writable<boolean> = writable(false);
 
-let authClient: Auth0Client
+const userKey = 'user';
+const tokenKey = 'token';
 
-const userKey = "user"
-const tokenKey = "token"
-
-let ggApi;
-
-if (browser){
-	token = writable(localStorage.getItem(tokenKey))
-	user = writable(JSON.parse(localStorage.getItem(userKey) || "null"))
-
-	ggApi = axios.create({
-		baseURL: settings.apiDomain,
-		timeout: 5000,
-		headers: {'Authorization': `Bearer ${get(token) ?? ""}`}
+async function authClientFactory() {
+	return await createAuth0Client({
+		domain: 'dev-v6k2m4w3utyj8q38.us.auth0.com',
+		clientId: 'KEJMJxNegOkkqLuW64gFMCm69AUEXcf3',
+		authorizationParams: {
+			redirect_uri: 'http://localhost:5173',
+			audience: 'ggclan502'
+		}
 	});
+}
+
+function setupStores() {
+	token = writable(localStorage.getItem(tokenKey));
+	user = writable(JSON.parse(localStorage.getItem(userKey) || 'null'));
 
 	token.subscribe((value) => {
 		if (value === null) {
@@ -35,7 +33,7 @@ if (browser){
 		}
 
 		localStorage.setItem(tokenKey, value);
-	})
+	});
 
 	user.subscribe((value) => {
 		if (value === null) {
@@ -44,42 +42,40 @@ if (browser){
 		}
 
 		localStorage.setItem(userKey, JSON.stringify(value));
-	})
-
-	authClient = await createAuth0Client({
-		domain: "dev-v6k2m4w3utyj8q38.us.auth0.com",
-		clientId: "KEJMJxNegOkkqLuW64gFMCm69AUEXcf3",
-		authorizationParams: {
-			redirect_uri: "http://localhost:5173",
-			audience: "ggclan502"
-		}
-	})
-
-	if (location.search.includes("state=") &&
-		(location.search.includes("code=") ||
-			location.search.includes("error="))) {
-
-		await authClient.handleRedirectCallback();
-		goto("/app/account")
-	}
-
-	if (get(token) === null){
-	  	if (await authClient.isAuthenticated()){
-				token.set(await authClient.getTokenSilently())
-				user.set((await ggApi.get("user/me", {headers:authHeaders()})).data)
-			}
-		}
+	});
 }
 
+async function checkAuth0() {
+	if (
+		location.search.includes('state=') &&
+		(location.search.includes('code=') || location.search.includes('error='))
+	) {
+		console.log('we are logged in');
+		const authClient = await authClientFactory();
+		await authClient.handleRedirectCallback();
+		token.set(await authClient.getTokenSilently());
+		user.set(await getMe());
+		console.log('finished things');
+		goto('/app');
+	}
+}
 
 export async function login() {
+	const authClient = await authClientFactory();
 	await authClient.loginWithRedirect();
 }
 
 export async function logout() {
-	if (browser){
+	if (browser) {
 		localStorage.removeItem(tokenKey);
 		localStorage.removeItem(userKey);
 	}
+	const authClient = await authClientFactory();
 	await authClient.logout();
+}
+
+if (browser) {
+	setupStores();
+	await checkAuth0();
+	ready.set(true);
 }

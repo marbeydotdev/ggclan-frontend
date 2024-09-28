@@ -1,17 +1,40 @@
 <script lang="ts">
-	import {user} from '$lib/auth';
-	import { get } from 'svelte/store';
-	import { authHeaders, ggApi } from '$lib/api';
-	let userChange = get(user)
+	import { updateMe, type User } from '$lib/api';
+	import { browser } from '$app/environment';
+	import { user } from '$lib/auth';
 
-	async function update(){
-		await ggApi.post("/user/update", userChange.profile, {headers: authHeaders()})
+	let _user: User | null;
+
+	if (browser) {
+		user.subscribe((u) => {
+			_user = u;
+		});
+	}
+
+	async function update(elem: Event) {
+		if (_user === null) {
+			return;
+		}
+		const t = elem.target as HTMLInputElement;
+		t.disabled = true;
+		await updateMe(_user.profile);
+		t.disabled = false;
+
 	}
 
 </script>
 
-{#if userChange !== undefined}
-	<input type="text" bind:value={userChange.profile.displayName} on:change={update}>
-	<input type="text" bind:value={userChange.profile.profilePicture} on:change={update}>
-	<input type="text" bind:value={userChange.profile.bannerPicture} on:change={update}>
+{#if browser && _user !== null && typeof _user?.profile !== 'undefined'}
+	<div class="mb-10">
+		<div class="flex items-center flex-row gap-1">
+			<img class="block relative object-contain w-20 h-20 rounded-full -mb-10 ml-4 z-50 shadow-lg"
+					 src="{_user.profile.profilePicture}"
+					 alt="profile">
+			<input type="text" class="!bg-transparent border-none"
+						 bind:value={_user.profile.displayName}
+						 on:change={update}>
+		</div>
+		<img class="block relative object-cover flex-grow w-full h-20 z-0 rounded" src="{_user.profile.bannerPicture}"
+				 alt="banner">
+	</div>
 {/if}
