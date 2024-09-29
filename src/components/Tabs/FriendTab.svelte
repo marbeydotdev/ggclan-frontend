@@ -1,0 +1,1 @@
+<small class="text-zinc-400">You have not added any friends yet.</small>

@@ -1,0 +1,1 @@
+<small class="text-zinc-400">You don't have any achievements yet.</small>

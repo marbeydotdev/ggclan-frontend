@@ -8,7 +8,7 @@ import { browser } from '$app/environment';
 export type User = {
 	created: string;
 	clans: never[];
-	profile: { displayName: string; profilePicture: string; bannerPicture: string };
+	profile: { displayName: string; profilePicture: string };
 };
 export type SearchResult = { name: string; iconUrl: string; gameId: string };
 
@@ -71,6 +71,6 @@ export async function updateMe(profile: User['profile']) {
 	const u = get(user);
 	u!.profile = profile;
 	user.set(u);
-	
+
 	toast('Updated user profile.', toastType.Success);
 }

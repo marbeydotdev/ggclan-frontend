@@ -1,0 +1,1 @@
+<small class="text-zinc-400">There are no events planned yet.</small>

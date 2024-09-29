@@ -3,7 +3,7 @@
 	import { logout, user } from '$lib/auth';
 	import { goto } from '$app/navigation';
 
-	let opened: boolean = false;
+	let opened: boolean = true;
 
 	let _user: User | null;
 
@@ -26,7 +26,7 @@
 	</button>
 	{#if opened}
 		<div
-			class="absolute border border-white/10 rounded flex flex-col w-52 right-0 top-16 text-left backdrop-blur">
+			class="absolute bg-white/10 rounded-md flex flex-col w-52 right-0 top-16 p-4 gap-2 text-left backdrop-blur backdrop-brightness-50 border border-white/20">
 			<span class="block px-3 py-2">{_user?.profile?.displayName}</span>
 			<button class="menu-item" on:click={() => {nav('/app')}}>Home</button>
 			<button class="menu-item" on:click={() => {nav('/app/account')}}>Account</button>
@@ -40,6 +40,6 @@
 
 <style lang="postcss">
     .menu-item {
-        @apply block text-left border-t first-of-type:border-t-0 border-zinc-800 bg-zinc-900 p-3 font-normal text-sm hover:bg-zinc-800
+        @apply block text-left border-t first-of-type:border-t-0 border-zinc-800 bg-black/40 px-4 py-3 rounded-md font-normal text-sm hover:bg-black/20
     }
 </style>

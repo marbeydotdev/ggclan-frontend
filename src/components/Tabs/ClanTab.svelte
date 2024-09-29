@@ -1,0 +1,1 @@
+<small class="text-zinc-400">You are not part of any clans yet.</small>
