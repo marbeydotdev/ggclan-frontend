@@ -10,7 +10,7 @@
 
 	import { fade } from 'svelte/transition';
 
-	let selected = [];
+	let selected: { name: string; icon: string; value: string }[] = [];
 
 	function onItemSelect(item) {
 		if (multipleChoice) {
@@ -27,7 +27,7 @@
 </script>
 
 <div
-	class="flex flex-col border-white/10 border-0 border-t-0 bg-zinc-800/10 overflow-y-scroll scrollbar scrollbar-thumb-zinc-600 scrollbar-none">
+	class="flex flex-col border-white/10 border-0 border-t-0 bg-zinc-800/10 overflow-y-scroll scrollbar scrollbar-thumb-zinc-600 max-h-40">
 	{#each items as item, index}
 		<button in:fade|global={{delay: index * 50}}
 						class="flex items-center w-full min-h-14 relative border-b border-white/10 px-4 hover:bg-zinc-400/5 transition-colors overflow-clip"

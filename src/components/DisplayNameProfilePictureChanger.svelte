@@ -43,6 +43,6 @@
 
 <style lang="postcss">
     .username-change {
-        @apply h-12 text-xl border-none bg-transparent font-normal font-mono mr-auto
+        @apply h-12 text-xl border-none bg-transparent font-normal font-mono mr-auto disabled:animate-pulse
     }
 </style>

@@ -5,7 +5,9 @@
 
 	let search = '';
 
-	let searchResultItems = [];
+	let searchResultItems: { name: string; icon: string; value: string }[] = [];
+
+	export let multiple: boolean = true;
 
 	let searchDebounce: number | undefined;
 
@@ -34,7 +36,7 @@
 </script>
 
 <div>
-	<input on:keydown={onSearchChange} bind:value={search} type="text" placeholder="Search..."
-				 class="w-full" class:rounded-b-none={searchResultItems.length !== 0}>
-	<TextIconSelectList items={searchResultItems} multipleChoice={true} />
+	<input on:keydown={onSearchChange} bind:value={search} type="text" placeholder="Search a game..."
+				 class="w-full small" class:rounded-b-none={searchResultItems.length !== 0}>
+	<TextIconSelectList items={searchResultItems} multipleChoice={multiple} />
 </div>

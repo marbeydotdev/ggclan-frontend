@@ -16,6 +16,14 @@ body {
     @apply dark:text-zinc-100 text-zinc-900
 }
 
-input {
-    @apply block rounded-lg border border-white/10 p-4 bg-white/5 outline-none hover:border-white/20 focus:border-white/30 transition-colors placeholder:text-zinc-500 hover:placeholder:text-zinc-400 placeholder:transition-colors text-zinc-300
+input, textarea {
+    @apply block rounded-lg border border-white/10 p-4 bg-white/5 outline-none hover:border-white/20 focus:border-white/30 transition-colors placeholder:text-zinc-500 hover:placeholder:text-zinc-400 placeholder:transition-colors text-zinc-300 resize-none
+}
+
+input.small, textarea.small {
+    @apply px-3 py-2 text-sm rounded bg-transparent w-full;
+}
+
+.button {
+    @apply flex items-center px-3 py-2 gap-2 rounded-full bg-zinc-800 hover:bg-zinc-100 hover:text-zinc-800;
 }
