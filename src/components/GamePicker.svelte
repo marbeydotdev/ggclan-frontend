@@ -37,6 +37,6 @@
 
 <div>
 	<input on:keydown={onSearchChange} bind:value={search} type="text" placeholder="Search a game..."
-				 class="w-full small" class:rounded-b-none={searchResultItems.length !== 0}>
+				 class="w-full mt-2 bg-zinc-900" class:rounded-b-none={searchResultItems.length !== 0}>
 	<TextIconSelectList items={searchResultItems} multipleChoice={multiple} />
 </div>

@@ -53,9 +53,10 @@
 		</button>
 	{/each}
 
+	
 </div>
 <div class="block text-sm text-zinc-400 w-full mt-2 ">
-	{#each items.filter(item => item.selected) as item}
+	{#each selected as item}
 		<button
 			class="flex justify-start items-center w-full h-8 bg-white/5 text-left px-3 border-b border-white/10 last:border-transparent">
 			<img class="aspect-square w-4 mr-3" alt="icon" src="{item.icon}">

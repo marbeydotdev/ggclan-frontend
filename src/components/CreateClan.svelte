@@ -9,8 +9,6 @@
 	let newDescription: string;
 	let newPrivate: boolean;
 
-	let opened: boolean = false;
-
 	let processing: boolean = false;
 
 	function create() {
@@ -29,33 +27,32 @@
 
 			processing = false;
 			toast('Clan has been created.', toastType.Success);
-			opened = false;
 		});
 
 	}
 </script>
 
-<div class="block mt-3" class:loading={processing}>
-	{#if opened}
-		<button on:click={() => opened = false} class="button ml-auto mb-3">
+<div class="block mt-3 relative" class:loading={processing}>
+	<input class="mb-3 !bg-zinc-900 !rounded-full w-full px-5" placeholder="Name" bind:value={newName}
+				 type="text">
+	<div class="flex items-center mb-2">
+		<span class="ml-5 mb-1 mr-auto text-zinc-400">Private</span>
+		<input type="checkbox" class="mr-5 w-6 h-6 rounded-full overflow-clip cursor-pointer blur"
+					 bind:value={newPrivate} />
+	</div>
+	<textarea bind:value={newDescription} class="h-32 !bg-zinc-900 mb-2 px-5 w-full"
+						placeholder="Description"></textarea>
+	<GamePicker multiple="{false}" />
+	<div class="flex items-center mt-3">
+		<button on:click={create} class="button mr-auto">
+			<CreateIcon />
+			create
+		</button>
+		<button class="button">
 			<CloseIcon />
 			close
 		</button>
-		<input class="small mb-3 border-0 !bg-zinc-900" placeholder="Name" bind:value={newName} type="text">
-		<div class="flex items-center mb-2">
-			<small class="ml-3 mb-1 mr-auto text-zinc-400">Private</small>
-			<input type="checkbox" bind:value={newPrivate} />
-		</div>
-		<textarea bind:value={newDescription} class="small h-32 border-none !bg-zinc-900 mb-2"
-							placeholder="Description"></textarea>
-		<GamePicker multiple="{false}" />
-		<button on:click={create} class="button mt-3">Create</button>
-	{:else}
-		<button class="button" on:click={() => opened = true}>
-			<CreateIcon />
-			create clan
-		</button>
-	{/if}
+	</div>
 </div>
 
 <style lang="postcss">

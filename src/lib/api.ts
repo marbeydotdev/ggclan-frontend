@@ -12,6 +12,7 @@ export type User = {
 };
 
 export type Clan = {
+	id: number;
 	name: string;
 	description: string;
 	private: boolean;
@@ -100,6 +101,11 @@ export async function updateMe(profile: User['profile']) {
 export async function getClans(page: number = 0) {
 	const result = await apiFactory()!.get('/clan/list', { params: { page: page } });
 	return result.data;
+}
+
+export async function getClan(clanId: number) {
+	const result = await apiFactory()!.get('clan/get/' + clanId);
+	return result;
 }
 
 export async function getMyClans(page: number = 0) {

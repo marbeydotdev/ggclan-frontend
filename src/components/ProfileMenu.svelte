@@ -3,7 +3,7 @@
 	import { logout, user } from '$lib/auth';
 	import { goto } from '$app/navigation';
 
-	let opened: boolean = true;
+	let opened: boolean = false;
 
 	let _user: User | null;
 
