@@ -1,5 +1,5 @@
 <script lang="ts">
-	import Logo from './Logo.svelte';
+	import Logo from '../Logo.svelte';
 	import { login, logout, token } from '$lib/auth.js';
 	import { browser } from '$app/environment';
 	import { get } from 'svelte/store';

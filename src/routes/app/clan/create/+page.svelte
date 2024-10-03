@@ -1,5 +1,5 @@
 <script>
-	import CreateClan from '../../../../components/CreateClan.svelte';
+	import CreateClan from '../../../../components/Clan/CreateClan.svelte';
 </script>
 
 <CreateClan />

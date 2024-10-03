@@ -15,13 +15,20 @@ export type Clan = {
 	id: number;
 	name: string;
 	description: string;
+	game: string;
 	private: boolean;
 	members: Array<ClanMember>;
 };
 
 export type ClanMember = {
-	userId: number;
-	Role: ClanMemberRole;
+	user: {
+		id: number;
+		profile: {
+			displayName: string;
+			profilePicture: string;
+		};
+	};
+	role: ClanMemberRole;
 };
 
 export enum ClanMemberRole {
@@ -113,8 +120,13 @@ export async function getMyClans(page: number = 0) {
 	return result.data;
 }
 
-export async function createClan(name: string, description: string, priv: boolean) {
-	const result = await apiFactory()!.post(`/clan/create`, { name, description, private: priv });
+export async function createClan(name: string, description: string, priv: boolean, game: string) {
+	const result = await apiFactory()!.post(`/clan/create`, {
+		name: name,
+		description: description,
+		private: priv,
+		game: game
+	});
 	if (result.status !== 200) {
 		toast('Failed to create clan.', toastType.Error);
 	}

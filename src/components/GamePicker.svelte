@@ -9,7 +9,9 @@
 
 	export let multiple: boolean = true;
 
-	let searchDebounce: number | undefined;
+	let searchDebounce: any;
+
+	export let selected: { name: string; icon: string; value: string }[];
 
 	function onSearchChange() {
 		clearTimeout(searchDebounce);
@@ -38,5 +40,5 @@
 <div>
 	<input on:keydown={onSearchChange} bind:value={search} type="text" placeholder="Search a game..."
 				 class="w-full mt-2 bg-zinc-900" class:rounded-b-none={searchResultItems.length !== 0}>
-	<TextIconSelectList items={searchResultItems} multipleChoice={multiple} />
+	<TextIconSelectList bind:selected={selected} items={searchResultItems} multipleChoice={multiple} />
 </div>

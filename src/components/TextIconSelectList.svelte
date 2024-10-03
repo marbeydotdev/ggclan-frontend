@@ -10,7 +10,7 @@
 
 	import { fade } from 'svelte/transition';
 
-	let selected: { name: string; icon: string; value: string }[] = [];
+	export let selected: { name: string; icon: string; value: string }[] = [];
 
 	function onItemSelect(item) {
 		if (multipleChoice) {
@@ -31,7 +31,7 @@
 	{#each items as item, index}
 		<button in:fade|global={{delay: index * 50}}
 						class="flex items-center w-full min-h-14 relative border-b border-white/10 px-4 hover:bg-zinc-400/5 transition-colors overflow-clip"
-						on:click={() => onItemSelect(index)}>
+						on:click={() => onItemSelect(item)}>
 			<img class="block object-contain aspect-square w-8 mr-5" alt="{item.name}" src="{item.icon}">
 			<span class="block mr-auto text-left text-sm text-zinc-300">{item.name}</span>
 			<img alt="fancy" src="{item.icon}" class="absolute inset-0 w-full h-full blur-2xl opacity-30">
@@ -53,7 +53,7 @@
 		</button>
 	{/each}
 
-	
+
 </div>
 <div class="block text-sm text-zinc-400 w-full mt-2 ">
 	{#each selected as item}
