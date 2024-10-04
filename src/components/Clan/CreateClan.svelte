@@ -51,8 +51,8 @@
 	<textarea bind:value={newDescription} class="h-32 !bg-zinc-900 mb-2 px-5 w-full"
 						placeholder="Description"></textarea>
 	<GamePicker multiple="{false}" bind:selected="{selected}" />
-	<div class="flex items-center mt-3">
-		<button on:click={create} class="button mr-auto">
+	<div class="flex items-center mt-3 gap-2">
+		<button on:click={create} class="button">
 			<CreateIcon />
 			create
 		</button>
@@ -60,6 +60,8 @@
 			<CloseIcon />
 			close
 		</a>
+
+
 	</div>
 </div>
 

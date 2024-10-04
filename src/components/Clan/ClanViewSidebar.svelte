@@ -15,6 +15,7 @@
 <div class="flex flex-col w-64 h-fit gap-1">
 	<button
 		class="navbutton"
+		class:nav-enabled={CurrentTab === "Home"}
 		on:click={() => {CurrentTab = "Home"}}
 	>
 		<HomeIcon />
@@ -22,6 +23,7 @@
 	</button>
 	<button
 		class="navbutton"
+		class:nav-enabled={CurrentTab === "Chat"}
 		on:click={() => {CurrentTab = "Chat"}}
 	>
 		<ChatIcon />
@@ -29,6 +31,7 @@
 	</button>
 	<button
 		class="navbutton"
+		class:nav-enabled={CurrentTab === "Members"}
 		on:click={() => {CurrentTab = "Members"}}
 	>
 		<MemberIcon />
@@ -36,6 +39,7 @@
 	</button>
 	<button
 		class="navbutton"
+		class:nav-enabled={CurrentTab === "Events"}
 		on:click={() => {CurrentTab = "Events"}}
 	>
 		<EventIcon />
@@ -45,6 +49,10 @@
 
 <style lang="postcss">
     .navbutton {
-        @apply flex items-center gap-2 font-medium text-zinc-300 text-xs px-3 py-3 text-left hover:bg-zinc-800 bg-zinc-900 rounded-lg
+        @apply flex border border-transparent items-center gap-2 font-medium text-zinc-300 text-xs px-3 py-3 text-left hover:bg-zinc-800 bg-zinc-900 rounded-lg
+    }
+
+    .nav-enabled {
+        @apply border-white/10
     }
 </style>

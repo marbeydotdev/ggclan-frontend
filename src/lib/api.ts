@@ -31,6 +31,13 @@ export type ClanMember = {
 	role: ClanMemberRole;
 };
 
+export type ClanChatMessage = {
+	id: number;
+	message: string;
+	created: Date;
+	clanMember: ClanMember;
+};
+
 export enum ClanMemberRole {
 	Member,
 	Administrator,
@@ -129,6 +136,24 @@ export async function createClan(name: string, description: string, priv: boolea
 	});
 	if (result.status !== 200) {
 		toast('Failed to create clan.', toastType.Error);
+	}
+	return result;
+}
+
+export async function getMessages(clanId: number, skip: number = 0, limit: number = 20) {
+	const result = await apiFactory()!.get('/chat/messages/' + clanId, {
+		params: { limit: limit, skip: skip }
+	});
+	if (result.status !== 200) {
+		toast('Failed to get messages.', toastType.Error);
+	}
+	return result;
+}
+
+export async function sendChatMessage(clanId: number, message: string) {
+	const result = await apiFactory()!.post(`/chat/messages/` + clanId, { message: message });
+	if (result.status !== 200) {
+		toast('Failed to send messages.', toastType.Error);
 	}
 	return result;
 }
