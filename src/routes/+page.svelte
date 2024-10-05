@@ -1,4 +1,5 @@
 <script lang="ts">
+	import ThreeDee from '../components/ThreeDee.svelte';
 </script>
 
 <svelte:head>
@@ -8,5 +9,5 @@
 </svelte:head>
 
 <div class="block">
-	
+	<ThreeDee />
 </div>

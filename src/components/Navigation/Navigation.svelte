@@ -1,6 +1,6 @@
 <script lang="ts">
 	import Logo from '../Logo.svelte';
-	import { login, logout, token } from '$lib/auth.js';
+	import { login, token } from '$lib/auth.js';
 	import { browser } from '$app/environment';
 	import { get } from 'svelte/store';
 	import ProfileMenu from './ProfileMenu.svelte';
@@ -19,7 +19,7 @@
 	</a>
 	<span class="w-full"></span>
 	{#if !auth}
-		<button on:click={() => {
+		<button class="navb" on:click={() => {
 	login();
 }}>login
 		</button>
@@ -28,3 +28,9 @@
 	{/if}
 
 </div>
+
+<style lang="postcss">
+    .navb {
+        @apply block w-fit px-3 py-2 rounded-full border hover:bg-zinc-100 hover:text-zinc-900
+    }
+</style>
