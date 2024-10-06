@@ -2,7 +2,7 @@
 	import ArrowIcon from 'virtual:icons/mdi/arrow-right-circle-outline';
 	import { type Clan, getMyClans } from '$lib/api';
 	import { ready } from '$lib/auth';
-	import ClanListClan from './ClanListClan.svelte';
+	import ClanListing from './ClanListing.svelte';
 
 	let myClans: Array<Clan> = [];
 
@@ -15,5 +15,5 @@
 	<small class="text-zinc-400">You are not part of any clans yet.</small>
 {/if}
 {#each myClans as clan}
-	<ClanListClan clan="{clan}" />
+	<ClanListing ClanListing="{clan}" />
 {/each}

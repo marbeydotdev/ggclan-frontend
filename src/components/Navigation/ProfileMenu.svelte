@@ -2,8 +2,9 @@
 	import { type User } from '$lib/api';
 	import { logout, user } from '$lib/auth';
 	import { goto } from '$app/navigation';
+	import { fly } from 'svelte/transition';
 
-	let opened: boolean = false;
+	let opened: boolean = true;
 
 	let _user: User | null;
 
@@ -26,8 +27,10 @@
 	</button>
 	{#if opened}
 		<div
-			class="absolute bg-white/10 rounded-md flex flex-col w-52 right-0 top-16 p-4 gap-2 text-left backdrop-blur backdrop-brightness-50 border border-white/20">
-			<span class="block px-3 py-2">{_user?.profile?.displayName}</span>
+			transition:fly={{y: 50}}
+			class="absolute rounded-xl flex flex-col w-64 right-0 top-16 px-5 py-5 gap-2 text-left border border-zinc-600 bg-zinc-950 shadow-xl shadow-black">
+			<span
+				class="block px-4 pt-3 mb-3 pb-4 font-normal text-sm border-b border-zinc-800">{_user?.profile?.displayName}</span>
 			<button class="menu-item" on:click={() => {nav('/app')}}>Home</button>
 			<button class="menu-item" on:click={() => {nav('/app/account')}}>Account</button>
 			<button on:click={() => {opened=false;logout()}} class="!text-red-600 menu-item">
@@ -40,6 +43,6 @@
 
 <style lang="postcss">
     .menu-item {
-        @apply block text-left border-t first-of-type:border-t-0 border-zinc-800 bg-black/40 px-4 py-3 rounded-md font-normal text-sm hover:bg-black/20
+        @apply block text-left hover:text-zinc-950 px-4 py-3 rounded-md font-normal text-sm hover:bg-zinc-100
     }
 </style>

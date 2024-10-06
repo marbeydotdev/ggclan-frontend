@@ -18,7 +18,7 @@
 
 <style lang="postcss">
     .buttons {
-        @apply flex flex-row gap-3 mb-5 select-none
+        @apply flex flex-row gap-3 select-none flex-wrap
     }
 
     .buttons button {

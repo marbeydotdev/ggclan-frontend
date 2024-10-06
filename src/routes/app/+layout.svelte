@@ -14,5 +14,5 @@
 	}
 
 </script>
-<ButtonNavigation />
+
 <slot />
