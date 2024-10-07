@@ -4,53 +4,35 @@
 	import ChatMessage from './ChatMessage.svelte';
 
 	export let ClanId: number;
-
+	let chatBox: HTMLDivElement;
 	let newMessage: string = '';
 
 	let messages: ClanChatMessage[] = [];
 
-	let TESTmessages: ClanChatMessage[] = [
-		{
-			clanMember: {
-				user: {
-					profile: {
-						displayName: 'testy',
-						profilePicture: '/favicon.png'
-					},
-					id: -1
-				},
-				role: ClanMemberRole.Member
-			},
-			message: 'hello this is an awesome and long test message',
-			id: -1,
-			created: new Date(180000000)
-		},
-		{
-			clanMember: {
-				user: {
-					profile: {
-						displayName: 'testy',
-						profilePicture: '/favicon.png'
-					},
-					id: -1
-				},
-				role: ClanMemberRole.Member
-			},
-			message: 'hello this is an awesome and long test message',
-			id: -1,
-			created: new Date(180000000)
-		}
-	];
-
-
-	if ($ready) {
+	function retrieveMessages() {
 		getMessages(ClanId).then((result) => {
 			if (result.status !== 200) {
 				return;
 			}
-
-			messages = result.data.sort(d => d.created);
+			if (messages.length !== result.data.length) {
+				scrollToBottom();
+			}
+			messages = result.data.sort(d => d.created).reverse();
 		});
+	}
+
+	if ($ready) {
+		retrieveMessages();
+		setInterval(() => {
+			retrieveMessages();
+		}, 1000);
+	}
+
+	function scrollToBottom() {
+		if (typeof chatBox === 'undefined') {
+			return;
+		}
+		chatBox.scrollTop = chatBox.scrollHeight + 1000;
 	}
 
 	function send() {
@@ -61,12 +43,11 @@
 
 </script>
 
-<div class="block relative p-2 mr-2 rounded-lg h-96 overflow-auto pb-5 scrollbar-thin">
+<div bind:this={chatBox}
+		 class="block relative p-2 mr-2 rounded-lg h-96 overflow-auto pb-5 scrollbar-thin">
 	{#each messages as message}
 		<ChatMessage ChatMessage="{message}" />
 	{/each}
-	<div
-		class="absolute w-full h-full block inset-0 bg-gradient-to-t from-black/90 to-transparent from-0% to-10% "></div>
 </div>
 
 <input

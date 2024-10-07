@@ -20,6 +20,14 @@ export type Clan = {
 	members: Array<ClanMember>;
 };
 
+export type Achievement = {
+	id: number;
+	created: Date;
+	name: string;
+	description: string;
+	rarity: number;
+};
+
 export type ClanMember = {
 	user: {
 		id: number;
@@ -154,6 +162,14 @@ export async function sendChatMessage(clanId: number, message: string) {
 	const result = await apiFactory()!.post(`/chat/messages/` + clanId, { message: message });
 	if (result.status !== 200) {
 		toast('Failed to send messages.', toastType.Error);
+	}
+	return result;
+}
+
+export async function getAchievements() {
+	const result = await apiFactory()!.get('/achievements/get');
+	if (result.status !== 200) {
+		toast('Failed to get achievements.', toastType.Error);
 	}
 	return result;
 }
