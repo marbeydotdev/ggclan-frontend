@@ -4,7 +4,7 @@
 	import { goto } from '$app/navigation';
 	import { fly } from 'svelte/transition';
 
-	let opened: boolean = true;
+	let opened: boolean = false;
 
 	let _user: User | null;
 

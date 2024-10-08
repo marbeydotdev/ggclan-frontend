@@ -1,13 +1,16 @@
 <script lang="ts">
 	import { ready } from '$lib/auth';
-	import { type ClanChatMessage, ClanMemberRole, getMessages, sendChatMessage } from '$lib/api';
+	import { type ClanChatMessage, getMessages, sendChatMessage } from '$lib/api';
 	import ChatMessage from './ChatMessage.svelte';
+	import { onDestroy } from 'svelte';
 
 	export let ClanId: number;
 	let chatBox: HTMLDivElement;
 	let newMessage: string = '';
 
 	let messages: ClanChatMessage[] = [];
+
+	let timeout;
 
 	function retrieveMessages() {
 		getMessages(ClanId).then((result) => {
@@ -23,7 +26,7 @@
 
 	if ($ready) {
 		retrieveMessages();
-		setInterval(() => {
+		timeout = setInterval(() => {
 			retrieveMessages();
 		}, 1000);
 	}
@@ -41,10 +44,14 @@
 		});
 	}
 
+	onDestroy(() => {
+		clearTimeout(timeout);
+	});
+
 </script>
 
 <div bind:this={chatBox}
-		 class="block relative p-2 mr-2 rounded-lg h-96 overflow-auto pb-5 scrollbar-thin">
+		 class="block relative mr-2 mb-2 rounded-lg h-64 overflow-auto pb-5 scrollbar-none">
 	{#each messages as message}
 		<ChatMessage ChatMessage="{message}" />
 	{/each}

@@ -5,8 +5,8 @@
 	export let ClanListing: Clan;
 </script>
 
-<a href="/app/clan/view/{ClanListing.id}"
-	 class="flex p-5 gap-3 mb-2 rounded-xl hover-effect">
+<div
+	class="flex p-5 gap-3 mb-2 rounded-xl hover-effect">
 	<img class="w-24 h-24 object-contain rounded-full p-2" src="/favicon.png" alt="pfp" />
 	<div class="flex flex-col flex-grow">
 		<span class="block font-semibold">{ClanListing.name}</span>
@@ -21,4 +21,4 @@
 	<div class="flex items-center">
 		<ArrowIcon />
 	</div>
-</a>
+</div>

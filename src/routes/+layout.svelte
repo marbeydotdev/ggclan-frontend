@@ -7,7 +7,7 @@
 </script>
 
 {#if get(ready)}
-	<div class="sticky -top-9 backdrop-blur-xl bg-zinc-950/70 z-50 rounded-xl">
+	<div class="sticky -top-9 backdrop-blur-xl bg-zinc-950/70 z-50">
 		<div
 			class="block w-full md:w-3/4 xl:w-2/4 px-8 pt-16 pb-4 mx-auto ">
 			<Navigation />

@@ -9,6 +9,8 @@
 	import ArrowIcon from 'virtual:icons/mdi/arrow-right-circle-outline';
 	import ClanViewSidebar from '../../../../../components/Clan/ClanViewSidebar.svelte';
 	import ClanChat from '../../../../../components/Clan/Chat/ClanChat.svelte';
+	import ClanMembers from '../../../../../components/Clan/ClanMembers.svelte';
+	import ClanHome from '../../../../../components/Clan/ClanHome.svelte';
 
 	let clan: Clan | null = null;
 
@@ -34,28 +36,20 @@
 
 
 </script>
-<a class="flex items-center gap-2 text-xs text-zinc-200 mb-4 -mt-2" href="/app">
-	<BackIcon />
-	back</a>
 {#if clan !== null}
-	<div class="flex mb-3">
+	<div class="flex mb-3 gap-0">
+		<ClanViewSidebar bind:CurrentTab="{CurrentPage}" />
 		<div class="block w-full">
 			{#if CurrentPage === Pages[Pages.Home]}
-		<span class="text-xl flex gap-2">
-			{clan.name}
-			{#if clan.private}
-				<LockIcon />
-			{/if}
-		</span>
-				<small class="block mb-3">{clan.game}</small>
-				<p class="block text-sm mb-3">
-					{clan.description}
-				</p>
+				<ClanHome Clan="{clan}" />
 			{:else if CurrentPage === Pages[Pages.Chat]}
 				<ClanChat ClanId="{clan.id}" />
+			{:else if CurrentPage === Pages[Pages.Members]}
+				<ClanMembers ClanId="{clan.id}" />
+			{:else if CurrentPage === Pages[Pages.Events]}
+				d
 			{/if}
 		</div>
-		<ClanViewSidebar bind:CurrentTab="{CurrentPage}" Clan="{clan}" />
 	</div>
 
 {:else}

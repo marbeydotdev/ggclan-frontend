@@ -37,6 +37,7 @@ export type ClanMember = {
 		};
 	};
 	role: ClanMemberRole;
+	created: Date;
 };
 
 export type ClanChatMessage = {
@@ -120,9 +121,9 @@ export async function updateMe(profile: User['profile']) {
 	toast('Updated user profile.', toastType.Success);
 }
 
-export async function getClans(page: number = 0) {
-	const result = await apiFactory()!.get('/clan/list', { params: { page: page } });
-	return result.data;
+export async function getClans(page: number = 0, search: string = '') {
+	const result = await apiFactory()!.get('/clan/list', { params: { page: page, search: search } });
+	return result;
 }
 
 export async function getClan(clanId: number) {
