@@ -1,5 +1,5 @@
 <script lang="ts">
-	import CloseIcon from 'virtual:icons/mdi/close';
+	import CloseIcon from 'virtual:icons/mdi/arrow-left';
 	import CreateIcon from 'virtual:icons/mdi/add';
 	import GamePicker from '../GamePicker.svelte';
 	import { toast, toastType } from '$lib/toasts';
@@ -40,6 +40,7 @@
 
 	}
 </script>
+
 <div class="block mt-3 relative" class:loading={processing}>
 	<input class="mb-3 !bg-zinc-900 !rounded-full w-full px-5" placeholder="Name" bind:value={newName}
 				 type="text">
@@ -56,11 +57,6 @@
 			<CreateIcon />
 			create
 		</button>
-		<a class="button" href="/app">
-			<CloseIcon />
-			close
-		</a>
-
 
 	</div>
 </div>

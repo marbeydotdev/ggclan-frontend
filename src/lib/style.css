@@ -31,3 +31,7 @@ input.small, textarea.small {
 .hover-effect {
     @apply border border-transparent hover:border-zinc-600 transition-colors hover:bg-gradient-to-bl hover:from-zinc-800 hover:to-zinc-900
 }
+
+.page-header {
+    @apply text-5xl font-semibold mb-4 block
+}

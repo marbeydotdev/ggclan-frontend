@@ -12,7 +12,7 @@
 
 </script>
 {#if myClans.length === 0}
-	<small class="text-zinc-400">You are not part of any clans yet.</small>
+	<small class="block text-zinc-400 my-3">You are not part of any clans yet.</small>
 {/if}
 {#each myClans as clan}
 	<ClanListing ClanListing="{clan}" />

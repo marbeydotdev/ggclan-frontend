@@ -10,7 +10,7 @@
 		<span
 			class:text-orange-400={ChatMessage.clanMember.role === 1}
 			class:text-yellow-400={ChatMessage.clanMember.role === 2}
-			class="text-sm mr-2">{ClanMemberRole[ChatMessage.clanMember.role]}</span>
+			class="text-sm mr-auto">{ClanMemberRole[ChatMessage.clanMember.role]}</span>
 		<small class="text-transparent group-hover:text-zinc-300">{new Intl.DateTimeFormat(navigator.language, {
 			dateStyle: "medium",
 			timeStyle: "short",
