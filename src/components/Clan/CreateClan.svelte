@@ -35,7 +35,7 @@
 
 			processing = false;
 			toast('Clan has been created.', toastType.Success);
-			goto('/app/clan/view/' + result.data.id);
+			goto('/app/clan/view?clanId=' + result.data.id);
 		});
 
 	}

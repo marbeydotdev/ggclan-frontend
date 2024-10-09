@@ -1,5 +1,5 @@
 <script lang="ts">
-	import ThreeDee from '../components/ThreeDee.svelte';
+	import { ready, token } from '$lib/auth';
 </script>
 
 <svelte:head>
@@ -9,5 +9,12 @@
 </svelte:head>
 
 <div class="block">
-	<ThreeDee />
+	<span class="page-header block">Welcome to GGClan.</span>
+	{#if $ready}
+		{#if $token != null}
+			<a href="/app" class="button w-fit">Open app</a>
+		{:else}
+			<span>Please login or create an account.</span>
+		{/if}
+	{/if}
 </div>

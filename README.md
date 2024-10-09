@@ -1,38 +1,28 @@
-# create-svelte
+# GGClan - Front-end
 
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/main/packages/create-svelte).
+Where communities thrive.
 
-## Creating a project
+## Technology
 
-If you're seeing this, you've probably already done this step. Congrats!
+### SvelteKit
 
-```bash
-# create a new project in the current directory
-npm create svelte@latest
+Front-end framework.
+Using adapter-static and prerender = true for a client-side SPA.
 
-# create a new project in my-app
-npm create svelte@latest my-app
-```
+### Axios
 
-## Developing
+API interactions.
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+## Run / build
 
-```bash
-npm run dev
+First:
 
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
+#### npm install
 
-## Building
+For development:
 
-To create a production version of your app:
+#### npm run dev
 
-```bash
-npm run build
-```
+For building:
 
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
+#### npm run build

@@ -1,16 +1,13 @@
 <script lang="ts">
-	import { page } from '$app/stores';
 	import { ready } from '$lib/auth';
 	import { type Clan, getClan } from '$lib/api';
-	import { toast, toastType } from '$lib/toasts';
+	import ClanViewSidebar from './ClanViewSidebar.svelte';
+	import ClanHome from './ClanHome.svelte';
+	import ClanChat from './Chat/ClanChat.svelte';
+	import ClanMembers from './ClanMembers.svelte';
 	import { goto } from '$app/navigation';
-	import LockIcon from 'virtual:icons/mdi/lock';
-	import BackIcon from 'virtual:icons/mdi/arrow-back';
-	import ArrowIcon from 'virtual:icons/mdi/arrow-right-circle-outline';
-	import ClanViewSidebar from '../../../../../components/Clan/ClanViewSidebar.svelte';
-	import ClanChat from '../../../../../components/Clan/Chat/ClanChat.svelte';
-	import ClanMembers from '../../../../../components/Clan/ClanMembers.svelte';
-	import ClanHome from '../../../../../components/Clan/ClanHome.svelte';
+
+	export let clanId: number;
 
 	let clan: Clan | null = null;
 
@@ -24,13 +21,10 @@
 	let CurrentPage: string = Pages[Pages.Home];
 
 	if ($ready) {
-		let id = Number($page.params.slug);
-		if (isNaN(id)) {
-			toast('Bad clan ID', toastType.Warning);
-			goto('/app');
-		}
-		getClan(id).then((cl) => {
+		getClan(clanId).then((cl) => {
 			clan = (cl.data as Clan);
+		}).catch(() => {
+			goto('/app');
 		});
 	}
 

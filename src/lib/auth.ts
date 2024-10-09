@@ -50,13 +50,12 @@ async function checkAuth0() {
 		location.search.includes('state=') &&
 		(location.search.includes('code=') || location.search.includes('error='))
 	) {
-		console.log('we are logged in');
 		const authClient = await authClientFactory();
 		await authClient.handleRedirectCallback();
 		token.set(await authClient.getTokenSilently());
 		user.set(await getMe());
-		console.log('finished things');
-		goto('/app');
+		console.log('we are logged in');
+		goto('/');
 	}
 }
 
@@ -76,6 +75,7 @@ export async function logout() {
 
 if (browser) {
 	setupStores();
-	await checkAuth0();
-	ready.set(true);
+	checkAuth0().then(() => {
+		ready.set(true);
+	});
 }
