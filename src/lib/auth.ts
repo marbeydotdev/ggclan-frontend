@@ -3,6 +3,7 @@ import { type Writable, writable } from 'svelte/store';
 import { goto } from '$app/navigation';
 import { getMe, type User } from '$lib/api';
 import { browser } from '$app/environment';
+import { settings } from '$lib/configuration';
 
 export let token: Writable<string | null>;
 export let user: Writable<User | null>;
@@ -16,7 +17,7 @@ async function authClientFactory() {
 		domain: 'dev-v6k2m4w3utyj8q38.us.auth0.com',
 		clientId: 'KEJMJxNegOkkqLuW64gFMCm69AUEXcf3',
 		authorizationParams: {
-			redirect_uri: 'http://localhost:5173',
+			redirect_uri: settings.redirectUri,
 			audience: 'ggclan502'
 		}
 	});
