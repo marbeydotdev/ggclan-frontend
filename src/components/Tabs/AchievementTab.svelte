@@ -25,6 +25,8 @@
 
 </script>
 
+<span class="page-header">Achievements</span>
+
 <small class="text-zinc-400 hidden">You don't have any achievements yet.</small>
 
 <SearchBar OnInputChange="{onSearchChange}" />

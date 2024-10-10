@@ -42,7 +42,7 @@
 			{:else if CurrentPage === Pages[Pages.Members]}
 				<ClanMembers ClanId="{clan.id}" />
 			{:else if CurrentPage === Pages[Pages.Events]}
-				d
+				<small class="text-zinc-400">This feature is not yet implemented.</small>
 			{/if}
 		</div>
 	</div>

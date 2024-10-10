@@ -204,3 +204,19 @@ export async function acceptInvite(inviteId: number) {
 	}
 	return result;
 }
+
+export async function denyInvite(inviteId: number) {
+	const result = await apiFactory()!.post(`/clan/invite/deny/${inviteId}`);
+	if (result.status !== 200) {
+		toast('Failed to accept.', toastType.Error);
+	}
+	return result;
+}
+
+export async function getFriends() {
+	const result = await apiFactory()!.get('user/friends');
+	if (result.status !== 200) {
+		toast('Failed to get friends.', toastType.Error);
+	}
+	return result.data;
+}

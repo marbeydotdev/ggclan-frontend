@@ -2,6 +2,7 @@
 	import { type Clan, sendInvite } from '$lib/api';
 	import ArrowIcon from 'virtual:icons/mdi/menu-right';
 
+	let requestSent: boolean = false;
 	export let ClanListing: Clan;
 </script>
 
@@ -19,7 +20,14 @@
 		</div>
 	</div>
 	<div class="flex items-center">
-		<ArrowIcon />
+		{#if !requestSent}
+			<button class="button"
+							on:click={() => {sendInvite(ClanListing.id).then(() => requestSent = true)}}>Join
+			</button>
+		{:else}
+			<button disabled class="button">Request sent</button>
+		{/if}
+
 	</div>
-	<button class="button" on:click={() => {sendInvite(ClanListing.id)}}>Send join request</button>
+
 </div>

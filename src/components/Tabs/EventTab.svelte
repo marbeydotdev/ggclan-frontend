@@ -3,12 +3,6 @@
 	import SearchBar from '../SearchBar.svelte';
 </script>
 
-{#if false}
-	<small class="text-zinc-400">There are no events planned yet.</small>
-{/if}
+<span class="page-header">Events</span>
 
-<SearchBar />
-
-<EventListing />
-<EventListing />
-<EventListing />
+<small class="text-zinc-500">This feature is not yet implemented.</small>

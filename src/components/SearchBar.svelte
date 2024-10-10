@@ -22,11 +22,12 @@
 	}
 </script>
 
-<div class="flex mb-2">
-	<input class="w-full border-0 rounded-r-none mr-0" type="text" placeholder="Search..." bind:value={currentSearch}
+<div class="flex mb-2 bg-zinc-100 border dark:bg-transparent dark:border-0 rounded-xl">
+	<input class="w-full border-0 rounded-r-none mr-0" type="text" placeholder="Search..."
+				 bind:value={currentSearch}
 				 on:keydown={inputHandler} />
 	<button on:click={buttonClickHandler}
-					class="px-3 flex items-center text-2xl bg-zinc-800 rounded-r-xl border border-white/10">
+					class="px-3 flex items-center text-2xl dark:bg-zinc-800 rounded-r-xl border border-white/10">
 		<SearchIcon />
 	</button>
 </div>

@@ -42,14 +42,14 @@
 </script>
 
 <div class="block mt-3 relative" class:loading={processing}>
-	<input class="mb-3 !bg-zinc-900 !rounded-full w-full px-5" placeholder="Name" bind:value={newName}
+	<input class="mb-3 w-full" placeholder="Name" bind:value={newName}
 				 type="text">
-	<div class="flex items-center mb-2">
-		<span class="ml-5 mb-1 mr-auto text-zinc-400">Private</span>
-		<input type="checkbox" class="mr-5 w-6 h-6 rounded-full overflow-clip cursor-pointer blur"
+	<div class="flex items-center mb-3 justify-between px-4">
+		<span class="mr-auto text-zinc-400">Private</span>
+		<input type="checkbox" class="w-6 h-6 rounded-full overflow-clip cursor-pointer blur dark:invert-0 invert"
 					 bind:checked={newPrivate} />
 	</div>
-	<textarea bind:value={newDescription} class="h-32 !bg-zinc-900 mb-2 px-5 w-full"
+	<textarea bind:value={newDescription} class="h-32 mb-2 w-full"
 						placeholder="Description"></textarea>
 	<GamePicker multiple="{false}" bind:selected="{selected}" />
 	<div class="flex items-center mt-3 gap-2">

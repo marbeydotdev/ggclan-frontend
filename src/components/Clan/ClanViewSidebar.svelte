@@ -38,10 +38,10 @@
 
 <style lang="postcss">
     .navbutton {
-        @apply hover:bg-zinc-100 hover:text-zinc-900 flex border border-transparent items-center gap-2 font-medium text-zinc-300 text-xs px-3 py-3 text-left rounded-lg mb-2 select-none
+        @apply hover:bg-zinc-100 hover:text-zinc-900 flex border border-transparent items-center gap-2 font-medium text-zinc-700 dark:text-zinc-300 text-xs px-3 py-3 text-left rounded-lg mb-2 select-none
     }
 
     .nav-enabled {
-        @apply bg-zinc-100 text-zinc-900
+        @apply bg-zinc-100 dark:text-zinc-900
     }
 </style>

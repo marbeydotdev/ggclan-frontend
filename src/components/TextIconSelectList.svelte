@@ -27,14 +27,15 @@
 </script>
 
 <div
-	class="flex flex-col border-white/10 border-0 border-t-0 bg-zinc-800/10 overflow-y-scroll scrollbar scrollbar-thumb-zinc-600 max-h-40">
+	class="flex flex-col border-white/10 border-0 border-t-0 dark:bg-zinc-800/10 overflow-y-scroll scrollbar scrollbar-thumb-zinc-600 max-h-40">
 	{#each items as item, index}
 		<button in:fade|global={{delay: index * 50}}
 						class="flex items-center w-full min-h-14 relative border-b border-white/10 px-4 hover:bg-zinc-400/5 transition-colors overflow-clip"
 						on:click={() => onItemSelect(item)}>
 			<img class="block object-contain aspect-square w-8 mr-5" alt="{item.name}" src="{item.icon}">
-			<span class="block mr-auto text-left text-sm text-zinc-300">{item.name}</span>
-			<img alt="fancy" src="{item.icon}" class="absolute inset-0 w-full h-full blur-2xl opacity-30">
+			<span class="block mr-auto text-left text-sm dark:text-zinc-300">{item.name}</span>
+			<img alt="fancy" src="{item.icon}"
+					 class="absolute inset-0 w-full h-full blur-2xl dark:opacity-30 opacity-50 -z-10">
 			<span class="block text-center w-4">
 				{#if selected.find(a => a === item) !== undefined}
 					{#if multipleChoice}
@@ -55,7 +56,7 @@
 
 
 </div>
-<div class="block text-sm text-zinc-400 w-full mt-2 ">
+<div class="block text-sm dark:text-zinc-400 w-full mt-2 ">
 	{#each selected as item}
 		<button
 			class="flex justify-start items-center w-full h-8 bg-white/5 text-left px-3 border-b border-white/10 last:border-transparent">

@@ -9,10 +9,10 @@ export enum toastType {
 }
 
 const background = {
-	info: 'hsl(150deg 30% 60%)',
-	success: 'hsl(150deg 30% 60%)',
-	warning: 'hsl(150deg 30% 60%)',
-	error: 'hsl(150deg 30% 60%)'
+	info: 'hsl(150deg 0% 60%)',
+	success: 'hsl(140deg 60% 60%)',
+	warning: 'hsl(35deg 90% 60%)',
+	error: 'hsl(10deg 90% 60%)'
 };
 
 export function toast(text: string, toastType: toastType) {
@@ -23,7 +23,8 @@ export function toast(text: string, toastType: toastType) {
 	toastify({
 		text: text,
 		style: {
-			background: background[toastType]
+			background: background[toastType],
+			borderRadius: '1000rem'
 		},
 		gravity: 'bottom',
 		position: 'right',
