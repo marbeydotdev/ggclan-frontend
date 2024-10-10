@@ -71,7 +71,7 @@ export async function logout() {
 		localStorage.removeItem(userKey);
 	}
 	const authClient = await authClientFactory();
-	await authClient.logout();
+	await authClient.logout({ logoutParams: { returnTo: settings.redirectUri } });
 }
 
 if (browser) {
