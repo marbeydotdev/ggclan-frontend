@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { Clan } from '$lib/api';
+	import { type Clan, sendInvite } from '$lib/api';
 	import ArrowIcon from 'virtual:icons/mdi/menu-right';
 
 	export let ClanListing: Clan;
@@ -21,4 +21,5 @@
 	<div class="flex items-center">
 		<ArrowIcon />
 	</div>
+	<button class="button" on:click={() => {sendInvite(ClanListing.id)}}>Send join request</button>
 </div>

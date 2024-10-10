@@ -53,6 +53,12 @@ export enum ClanMemberRole {
 	Owner
 }
 
+export type ClanInvite = {
+	id: number;
+	user: User;
+	message: string;
+};
+
 export type SearchResult = { name: string; iconUrl: string; gameId: string };
 
 export function authHeaders() {
@@ -171,6 +177,30 @@ export async function getAchievements() {
 	const result = await apiFactory()!.get('/achievements/get');
 	if (result.status !== 200) {
 		toast('Failed to get achievements.', toastType.Error);
+	}
+	return result;
+}
+
+export async function getInvites(clanId: number) {
+	const result = await apiFactory()!.get('/clan/get/' + clanId + '/invites');
+	if (result.status !== 200) {
+		toast('Failed to get invites.', toastType.Error);
+	}
+	return result;
+}
+
+export async function sendInvite(clanId: number) {
+	const result = await apiFactory()!.post('/clan/join/' + clanId);
+	if (result.status !== 200) {
+		toast('Failed to send invite.', toastType.Error);
+	}
+	return result;
+}
+
+export async function acceptInvite(inviteId: number) {
+	const result = await apiFactory()!.post(`/clan/invite/accept/${inviteId}`);
+	if (result.status !== 200) {
+		toast('Failed to accept.', toastType.Error);
 	}
 	return result;
 }
