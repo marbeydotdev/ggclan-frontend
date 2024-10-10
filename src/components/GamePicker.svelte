@@ -11,6 +11,8 @@
 
 	let searchDebounce: any;
 
+	let searching: boolean = false;
+
 	export let selected: { name: string; icon: string; value: string }[];
 
 	function onSearchChange() {
@@ -26,7 +28,12 @@
 			return;
 		}
 
+		searching = true;
+
 		let result = await gameSearch(search);
+
+		searching = false;
+
 		searchResultItems = result.map((item) => {
 			return {
 				name: item.name,
@@ -38,7 +45,13 @@
 </script>
 
 <div>
-	<input on:keydown={onSearchChange} bind:value={search} type="text" placeholder="Search a game..."
-				 class="w-full mt-2" class:rounded-b-none={searchResultItems.length !== 0}>
+	{#if !searching}
+		<input on:keydown={onSearchChange} bind:value={search} type="text" placeholder="Search a game..."
+					 class="w-full mt-2" class:rounded-b-none={searchResultItems.length !== 0}>
+	{:else}
+		<input bind:value={search} type="text" placeholder="Search a game..."
+					 class="w-full mt-2 animate-pulse" disabled class:rounded-b-none={searchResultItems.length !== 0}>
+	{/if}
+
 	<TextIconSelectList bind:selected={selected} items={searchResultItems} multipleChoice={multiple} />
 </div>

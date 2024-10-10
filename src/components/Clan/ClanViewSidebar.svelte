@@ -2,7 +2,7 @@
 	export let CurrentTab: string;
 </script>
 
-<div class="flex flex-col min-w-32 h-fit mr-5">
+<div class="flex flex-row sm:flex-col w-full sm:w-32 h-fit mr-5 sm:gap-0 gap-3 overflow-x-auto">
 	<button
 		class="navbutton"
 		class:nav-enabled={CurrentTab === "Home"}

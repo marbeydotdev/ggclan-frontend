@@ -6,7 +6,7 @@
 </script>
 
 <a href="/app/clan/view?clanId={ClanListing.id}"
-	 class="flex p-5 gap-3 mb-2 rounded-xl hover-effect">
+	 class="flex sm:p-5 py-3 sm:gap-3 sm:mb-2 mb-5 rounded-xl hover-effect">
 	<img class="w-24 h-24 object-contain rounded-full p-2" src="/favicon.png" alt="pfp" />
 	<div class="flex flex-col flex-grow">
 		<span class="block font-semibold">{ClanListing.name}</span>

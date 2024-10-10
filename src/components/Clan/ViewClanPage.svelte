@@ -32,9 +32,9 @@
 
 </script>
 {#if clan !== null}
-	<div class="flex mb-3 gap-0">
+	<div class="flex flex-col sm:flex-row sm:mb-3 gap-0 relative">
 		<ClanViewSidebar bind:CurrentTab="{CurrentPage}" />
-		<div class="block w-full">
+		<div class="block w-full mt-5 sm:mt-0">
 			{#if CurrentPage === Pages[Pages.Home]}
 				<ClanHome Clan="{clan}" />
 			{:else if CurrentPage === Pages[Pages.Chat]}

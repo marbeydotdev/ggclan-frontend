@@ -7,7 +7,8 @@
 <div
 	class="block w-full py-3 px-2 hover:bg-zinc-50 dark:hover:bg-zinc-900 cursor-pointer group border-b dark:border-zinc-900 hover:shadow-xl dark:hover:shadow-none !shadow-black/5">
 	<div class="flex items-center">
-		<span class="block text-sm ml-10 dark:text-zinc-300 mr-2">{ChatMessage.clanMember.user.profile.displayName}</span>
+		<span
+			class="block text-sm sm:ml-10 dark:text-zinc-300 mr-2">{ChatMessage.clanMember.user.profile.displayName}</span>
 		<span
 			class:text-orange-400={ChatMessage.clanMember.role === 1}
 			class:text-yellow-400={ChatMessage.clanMember.role === 2}
