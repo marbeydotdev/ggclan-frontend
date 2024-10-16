@@ -5,7 +5,7 @@
 </script>
 
 <div
-	class="block hover-effect flex-grow basis-1/3 aspect-square rounded-xl p-5 cursor-pointer">
+	class="block hover-effect flex-grow basis-1/4 aspect-square rounded-xl p-5 cursor-pointer">
 	<span class="block text-lg font-semibold">{Achievement.name}</span>
 	<small class="block mb-5">Achieved
 		on {new Intl.DateTimeFormat(navigator.language, {

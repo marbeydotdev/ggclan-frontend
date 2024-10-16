@@ -1,6 +1,6 @@
 <script lang="ts">
-	import SearchBar from '../SearchBar.svelte';
-	import AchievementListing from '../Achievement/AchievementListing.svelte';
+	import SearchBar from '../../../components/SearchBar.svelte';
+	import AchievementListing from '../../../components/achievements/AchievementListing.svelte';
 	import { type Achievement, getAchievements } from '$lib/api.js';
 	import { ready } from '$lib/auth';
 

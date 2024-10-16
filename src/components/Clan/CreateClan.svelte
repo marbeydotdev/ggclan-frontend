@@ -1,5 +1,4 @@
 <script lang="ts">
-	import CloseIcon from 'virtual:icons/mdi/arrow-left';
 	import CreateIcon from 'virtual:icons/mdi/add';
 	import GamePicker from '../GamePicker.svelte';
 	import { toast, toastType } from '$lib/toasts';

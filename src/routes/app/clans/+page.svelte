@@ -1,6 +1,6 @@
 <script lang="ts">
-	import ClanList from '../Clan/ClanList.svelte';
-	import SearchBar from '../SearchBar.svelte';
+	import ClanList from '../../../components/Clan/ClanList.svelte';
+	import SearchBar from '../../../components/SearchBar.svelte';
 
 	let search: boolean = false;
 </script>
@@ -16,4 +16,3 @@
 {/if}
 <div class="block mb-2"></div>
 <ClanList />
-

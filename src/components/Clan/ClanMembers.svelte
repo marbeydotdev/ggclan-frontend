@@ -1,49 +1,63 @@
 <script lang="ts">
-	import { acceptInvite, type Clan, type ClanInvite, ClanMemberRole, denyInvite, getClan, getInvites } from '$lib/api';
+	import {
+		acceptInvite,
+
+		type ClanInvite,
+		type ClanMember,
+		ClanMemberRole,
+		denyInvite,
+		getInvites, getMembers
+	} from '$lib/api';
 	import { ready } from '$lib/auth';
 	import { toast, toastType } from '$lib/toasts';
+	import { onDestroy } from 'svelte';
 
+	let timeout;
 	export let ClanId: number;
 
-	let clan: Clan;
 	let joinRequests: ClanInvite[] | null = null;
 
+	let members: ClanMember[] = [];
+
+	function refreshData() {
+		getInvites(ClanId).then((invites) => {
+			joinRequests = invites.data;
+		});
+		getMembers(ClanId).then(res => {
+			members = res.data;
+		});
+	}
 
 	if ($ready) {
-		getClan(ClanId).then(req => {
-			clan = req.data;
-			getInvites(ClanId).then((invites) => {
-				joinRequests = invites.data;
-			});
-		});
+		refreshData();
+		timeout = setInterval(() => {
+			refreshData();
+		}, 3000);
 	}
 
 	function accept(inviteId: number) {
 		acceptInvite(inviteId).then((invite) => {
 			toast('User has joined your clan.', toastType.Success);
-			getClan(ClanId).then(req => {
-				clan = req.data;
-			});
-			getInvites(ClanId).then((invites) => {
-				joinRequests = invites.data;
-			});
+			refreshData();
 		});
 	}
 
 	function deny(inviteId: number) {
 		denyInvite(inviteId).then((invite) => {
 			toast('Invite request has been denied.', toastType.Success);
-			getInvites(ClanId).then((invites) => {
-				joinRequests = invites.data;
-			});
+			refreshData();
 		});
 	}
 
+
+	onDestroy(() => {
+		clearTimeout(timeout);
+	});
 </script>
 
 <span class="page-header">Members</span>
 
-{#each clan?.members ?? [] as member}
+{#each members as member}
 	<div
 		class="flex p-5 cursor-pointer gap-3 mb-2 rounded-xl hover-effect">
 		<img class="w-16 h-16 object-contain rounded-full p-2" src="{member.user.profile.profilePicture}" alt="pfp" />

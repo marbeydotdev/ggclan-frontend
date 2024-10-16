@@ -1,6 +1,5 @@
 <script>
-	import DisplayNameProfilePictureChanger from '../../../components/DisplayNameProfilePictureChanger.svelte';
-	import SignUpGameSelector from '../../../components/GamePicker.svelte';
+	import DisplayNameProfilePictureChanger from '../../../components/account/DisplayNameProfilePictureChanger.svelte';
 </script>
 
 <DisplayNameProfilePictureChanger />

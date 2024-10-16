@@ -17,7 +17,6 @@ export type Clan = {
 	description: string;
 	game: string;
 	private: boolean;
-	members: Array<ClanMember>;
 };
 
 export type Achievement = {
@@ -36,6 +35,7 @@ export type ClanMember = {
 			profilePicture: string;
 		};
 	};
+	clanId: number;
 	role: ClanMemberRole;
 	created: Date;
 };
@@ -128,7 +128,9 @@ export async function updateMe(profile: User['profile']) {
 }
 
 export async function getClans(page: number = 0, search: string = '') {
-	const result = await apiFactory()!.get('/clan/list', { params: { page: page, search: search } });
+	const result = await apiFactory()!.get('/clan/browse', {
+		params: { page: page, search: search }
+	});
 	return result;
 }
 
@@ -138,7 +140,7 @@ export async function getClan(clanId: number) {
 }
 
 export async function getMyClans(page: number = 0) {
-	const result = await apiFactory()!.get('/clan/list/me', { params: { page: page } });
+	const result = await apiFactory()!.get('/clan/browse/me', { params: { page: page } });
 	return result.data;
 }
 
@@ -219,4 +221,12 @@ export async function getFriends() {
 		toast('Failed to get friends.', toastType.Error);
 	}
 	return result.data;
+}
+
+export async function getMembers(clanId: number) {
+	const result = await apiFactory()!.get('/members/' + clanId);
+	if (result.status !== 200) {
+		toast('Failed to get members.', toastType.Error);
+	}
+	return result;
 }

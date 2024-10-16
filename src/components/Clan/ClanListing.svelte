@@ -1,8 +1,17 @@
 <script lang="ts">
-	import type { Clan } from '$lib/api';
+	import { type Clan, type ClanMember, getMembers } from '$lib/api';
 	import ArrowIcon from 'virtual:icons/mdi/menu-right';
+	import { ready } from '$lib/auth';
+	import ClanList from './ClanList.svelte';
 
 	export let ClanListing: Clan;
+
+	let members: ClanMember[] = [];
+	if ($ready) {
+		getMembers(ClanListing.id).then(res => {
+			members = res.data;
+		});
+	}
 </script>
 
 <a href="/app/clan/view?clanId={ClanListing.id}"
@@ -13,7 +22,7 @@
 		<small class="block">{ClanListing.game}</small>
 		<p class="block flex-grow w-full h-12 overflow-ellipsis overflow-clip">{ClanListing.description}</p>
 		<div class="flex gap-2">
-			{#each ClanListing.members as member}
+			{#each members as member}
 				<img class="w-6 h-6 rounded-full" src="{member.user.profile.profilePicture}" alt="pfp" />
 			{/each}
 		</div>

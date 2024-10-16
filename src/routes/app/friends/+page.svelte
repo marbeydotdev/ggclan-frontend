@@ -1,6 +1,6 @@
 <script lang="ts">
-	import FriendListing from '../Friends/FriendListing.svelte';
-	import SearchBar from '../SearchBar.svelte';
+	import FriendListing from '../../../components/Friends/FriendListing.svelte';
+	import SearchBar from '../../../components/SearchBar.svelte';
 	import { onMount } from 'svelte';
 	import { getFriends, type User } from '$lib/api';
 

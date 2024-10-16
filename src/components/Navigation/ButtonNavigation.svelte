@@ -1,18 +1,19 @@
 <script lang="ts">
-	import { NavigationPage } from '$lib/stores';
 	import { goto } from '$app/navigation';
+	import { page } from '$app/stores';
 
 	const tabs = [
-		'Clans',
-		'Friends',
-		'Events',
-		'Achievements'
+		['Clans', '/app/clans'],
+		['Friends', '/app/friends'],
+		['Events', '/app/events'],
+		['Achievements', '/app/achievements']
 	];
+
 </script>
 
 <div class="buttons">
 	{#each tabs as tab}
-		<button class:active={$NavigationPage === tab} on:click={() => {$NavigationPage = tab; goto('/app')}}>{tab}</button>
+		<button class:active={$page.url.pathname === tab[1]} on:click={() => {goto(tab[1])}}>{tab[0]}</button>
 	{/each}
 </div>
 

@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { ready } from '$lib/auth';
-	import { type Clan, type ClanInvite, getClan, getInvites } from '$lib/api';
+	import { type Clan, getClan } from '$lib/api';
 	import ClanViewSidebar from './ClanViewSidebar.svelte';
 	import ClanHome from './ClanHome.svelte';
 	import ClanChat from './Chat/ClanChat.svelte';

@@ -3,7 +3,6 @@
 	import { onMount } from 'svelte';
 	import { goto } from '$app/navigation';
 	import ViewClanPage from '../../../../components/Clan/ViewClanPage.svelte';
-	import type { ClanInvite } from '$lib/api';
 
 	onMount(() => {
 		const hasClanId = $page.url.searchParams.has('clanId');

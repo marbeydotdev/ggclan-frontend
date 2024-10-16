@@ -2,7 +2,7 @@
 
 	import SearchBar from '../../../../components/SearchBar.svelte';
 	import { type Clan, getClans } from '$lib/api';
-	import ClanSearchListing from '../../../../components/Clan/ClanSearchListing.svelte';
+	import ClanSearchListing from '../../../../components/Clan/browse/ClanSearchListing.svelte';
 	import { ready } from '$lib/auth';
 	import BackButton from '../../../../components/Navigation/BackButton.svelte';
 
