@@ -1,10 +1,9 @@
-FROM node:alpine as build
-
+FROM oven/bun as build
 ADD . /app
 WORKDIR /app
 
-RUN npm install
-RUN npm run build
+RUN bun install
+RUN bun run build
 
 FROM nginx:stable
 COPY nginx.conf /etc/nginx/conf.d/default.conf
