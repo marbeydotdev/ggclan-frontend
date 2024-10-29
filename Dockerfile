@@ -1,8 +1,11 @@
-FROM oven/bun as build
-ADD . /app
+FROM oven/bun
+
 WORKDIR /app
+COPY package.json package.json
+RUN bun install
+
+COPY . .
+RUN bun run build
 
 EXPOSE 3000
-
-RUN bun install
-RUN bun run build
+ENTRYPOINT ["bun", "./build"]
