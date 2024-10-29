@@ -6,7 +6,6 @@
 	import Unchecked from 'virtual:icons/gravity-ui/square';
 	import Selected from 'virtual:icons/gravity-ui/circle-check';
 	import Deselected from 'virtual:icons/gravity-ui/circle';
-	import Close from 'virtual:icons/gravity-ui/square-Xmark';
 
 	import { fade } from 'svelte/transition';
 
@@ -62,9 +61,6 @@
 			class="flex justify-start items-center w-full h-8 bg-white/5 text-left px-3 border-b border-white/10 last:border-transparent">
 			<img class="aspect-square w-4 mr-3" alt="icon" src="{item.icon}">
 			<span class="mr-auto">{item.name}</span>
-			<button>
-				<Close />
-			</button>
 		</button>
 	{/each}
 </div>
