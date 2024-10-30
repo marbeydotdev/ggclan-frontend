@@ -4,7 +4,7 @@
 	import { type Clan, getClans } from '$lib/api';
 	import ClanSearchListing from '../../../../components/Clan/browse/ClanSearchListing.svelte';
 	import { ready } from '$lib/auth';
-	import BackButton from '../../../../components/Navigation/BackButton.svelte';
+	import BackIcon from 'virtual:icons/mdi/arrow-left';
 
 	let clans: Clan[] = [];
 
@@ -27,10 +27,12 @@
 </script>
 <div class="flex items-center gap-2">
 	<span class="page-header flex-grow">Join a clan</span>
-	<a class="button w-12 h-12 mb-2" href="/app/clans">{'<'}</a>
+	<a class="button w-12 h-12 mb-2" href="/app/clans">
+		<BackIcon />
+	</a>
 </div>
 
-<SearchBar OnSearch="{updateSearch}" />
+<SearchBar compact="{true}" OnSearch="{updateSearch}" />
 
 {#each clans as clan}
 	<ClanSearchListing ClanListing="{clan}" />
@@ -43,5 +45,6 @@
 {/if}
 
 {#if !loading && clans.length === 0}
-	<span class="block text-sm text-zinc-300">no clans have been created yet. be the first!</span>
+	<span class="block text-sm text-zinc-300">no clans have been created yet. <a class="text-blue-500 hover-effect"
+																																							 href="/app/clan/create">make one!</a></span>
 {/if}

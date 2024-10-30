@@ -4,6 +4,7 @@
 	import { browser } from '$app/environment';
 	import { user } from '$lib/auth.js';
 	import { toast, toastType } from '$lib/toasts';
+	import PencilIcon from 'virtual:icons/mdi/pencil';
 
 	let _user: User | null;
 
@@ -48,24 +49,27 @@
 
 <span class="page-header">Account</span>
 
-<div class="row">
-	<span class="text-zinc-400 font-medium">display name</span>
+<div class="row !border-b border-zinc-800">
+	<span class="mb-2 pb-3 text-lg">display name</span>
 	{#if _user !== null}
-		<input type="text" onchange="{update}" bind:value={_user.profile.displayName}>
+		<div class="w-full flex gap-3">
+			<input onchange="{update}" type="text" class="text-sm flex-grow"
+						 bind:value={_user.profile.displayName}>
+			<PencilIcon />
+		</div>
+
 	{/if}
 </div>
 
-<div class="row">
-	<span class="text-zinc-400 font-medium">profile picture</span>
+<div class="row !border-b border-zinc-800">
+	<span class="mb-2 pb-3 text-lg">profile picture</span>
 	{#if _user !== null}
-		<input onchange="{tryProfilePictureUpdate}" type="url" class="text-sm" bind:value={_user.profile.profilePicture}>
-	{/if}
-</div>
+		<div class="w-full flex gap-3">
+			<input onchange="{update}" type="text" class="text-sm flex-grow"
+						 bind:value={_user.profile.profilePicture}>
+			<PencilIcon />
+		</div>
 
-<div class="row">
-	<br>
-	{#if _user !== null}
-		<img class="w-24 h-24 object-contain object-left" alt="profile" src={_user.profile.profilePicture}>
 	{/if}
 </div>
 
@@ -75,7 +79,7 @@
     }
 
     .row {
-        @apply flex justify-between items-center py-5 border-0 border-zinc-900 last-of-type:border-b-0
+        @apply flex justify-between flex-col sm:flex-row sm:items-center py-5 border-0 border-zinc-900 last-of-type:border-b-0
     }
 
     .row > * {

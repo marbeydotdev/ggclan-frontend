@@ -18,7 +18,7 @@
 		</div>
 	</div>
 
-	<div class="block relative breakpoints py-4 mx-auto">
+	<div class="block relative breakpoints py-4 mx-auto h-full">
 		<slot></slot>
 	</div>
 {/if}

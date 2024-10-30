@@ -14,7 +14,7 @@
 	}
 </script>
 
-<a href="/app/clan/view?clanId={ClanListing.id}"
+<a href="/app/clan/{ClanListing.id}"
 	 class="flex sm:p-5 py-3 sm:gap-3 sm:mb-2 mb-5 rounded-xl hover-effect">
 	<img class="w-24 h-24 object-contain rounded-full p-2" src="/favicon.png" alt="pfp" />
 	<div class="flex flex-col flex-grow">

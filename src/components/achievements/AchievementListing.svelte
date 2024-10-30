@@ -5,16 +5,16 @@
 </script>
 
 <div
-	class="flex hover-effect flex-grow basis-1/2 rounded-xl p-5 cursor-pointer">
-	<span class="flex items-center text-center basis-1/4 text-lg font-semibold">{Achieved.name}</span>
+	class="flex flex-col md:flex-row flex-grow rounded-xl p-3 mb-3 bg-zinc-900 shadow-xl">
+	<span
+		class="flex items-center basis-1/4 text-2xl font-semibold text-yellow-500">{Achieved.name}</span>
 
 	<div>
-		<small class="block">Achieved
-			on {new Intl.DateTimeFormat(navigator.language, {
-				dateStyle: "medium",
-				timeStyle: "short"
-			}).format(new Date(Achieved.created))}</small>
-		<p>{Achieved.description}</p>
-	</div>
 
+		<p class="mb-3">{Achieved.description}</p>
+		<small class="block text-xs text-zinc-500">{new Intl.DateTimeFormat(navigator.language, {
+			dateStyle: "medium",
+			timeStyle: "short"
+		}).format(new Date(Achieved.created))}</small>
+	</div>
 </div>

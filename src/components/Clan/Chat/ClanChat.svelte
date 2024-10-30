@@ -51,7 +51,7 @@
 </script>
 
 <div bind:this={chatBox}
-		 class="block relative mr-2 mb-2 rounded-lg sm:h-64 h-72 overflow-auto pb-5 scrollbar-none bg-zinc-100 dark:bg-transparent">
+		 class="block relative mr-2 mb-2 rounded-lg sm:h-64 overflow-auto pb-5 scrollbar-none bg-zinc-100 dark:bg-transparent">
 	{#each messages as message}
 		<ChatMessage ChatMessage="{message}" />
 	{/each}
