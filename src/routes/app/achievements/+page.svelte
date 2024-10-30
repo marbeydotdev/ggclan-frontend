@@ -29,10 +29,10 @@
 
 <small class="text-zinc-400 hidden">You don't have any achievements yet.</small>
 
-<SearchBar OnInputChange="{onSearchChange}" />
+<SearchBar compact="{true}" OnInputChange="{onSearchChange}" />
 
-<div class="flex flex-wrap gap-2">
+<div class="flex flex-wrap gap-2 flex-col">
 	{#each achievementList as achievement}
-		<AchievementListing Achievement="{achievement}" />
+		<AchievementListing Achieved="{achievement}" />
 	{/each}
 </div>

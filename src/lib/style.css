@@ -25,7 +25,7 @@ input.small, textarea.small {
 }
 
 .button {
-    @apply flex items-center px-3 py-2 gap-2 rounded-full hover:bg-zinc-800 hover:shadow-xl dark:hover:shadow-none dark:hover:bg-zinc-50 hover:text-zinc-100 dark:hover:text-zinc-900 border-0 transition border-zinc-50;
+    @apply flex items-center justify-center px-3 py-2 gap-2 rounded-full hover:bg-zinc-800 hover:shadow-xl dark:hover:shadow-none dark:hover:bg-zinc-50 hover:text-zinc-100 dark:hover:text-zinc-900 border-0 transition border-zinc-50;
 }
 
 .hover-effect {

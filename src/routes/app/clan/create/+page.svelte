@@ -41,7 +41,10 @@
 	}
 </script>
 
-<BackButton target="/app/clans" />
+<div class="flex items-center">
+	<span class="page-header flex-grow">Create a clan</span>
+	<a class="button w-12 h-12 mb-2" href="/app/clans">{'<'}</a>
+</div>
 
 <div class="block mt-3 relative" class:loading={processing}>
 	<input class="mb-3 w-full" placeholder="Name" bind:value={newName}

@@ -16,11 +16,12 @@
 
 <span class="page-header">Friends</span>
 
+<SearchBar compact="{true}" />
+
 <small class:hidden={friends != null && friends.length > 0} class="text-zinc-500 block mb-2">You have not added any
 	friends
 	yet. Join a clan to make friends!</small>
 
-<SearchBar />
 
 {#each friends ?? [] as friend}
 	<div class="block">
