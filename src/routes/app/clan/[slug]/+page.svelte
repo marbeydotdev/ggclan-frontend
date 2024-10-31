@@ -4,13 +4,14 @@
 	import { onDestroy, onMount } from 'svelte';
 	import {
 		acceptInvite,
-		type Clan, type ClanChatMessage,
+		type Clan,
 		type ClanInvite,
 		type ClanMember,
-		ClanMemberRole, denyInvite,
+		ClanMemberRole,
+		denyInvite,
 		getClan,
 		getInvites,
-		getMembers, getMessages, sendChatMessage
+		getMembers
 	} from '$lib/api';
 	import { goto } from '$app/navigation';
 
@@ -18,7 +19,9 @@
 	import PeopleIcon from 'virtual:icons/mdi/people';
 	import AddIcon from 'virtual:icons/mdi/check';
 	import RemoveIcon from 'virtual:icons/mdi/close';
-	import SendIcon from 'virtual:icons/mdi/send';
+	import ChatBox from '../../../../components/Clan/ChatBox.svelte';
+	import { user } from '$lib/auth';
+	import { browser } from '$app/environment';
 
 	onMount(() => {
 		clanId = Number($page.params.slug);
@@ -28,55 +31,42 @@
 			goto('/app');
 		});
 		retrieveInvitesAndMembers();
-		retrieveMessages();
-		messageRetrieveInterval = setInterval(retrieveMessages, 1000);
+		memberInterval = setInterval(retrieveInvitesAndMembers, 5000);
 	});
 
-	function retrieveMessages() {
-		getMessages(clanId!).then((clanMessages) => {
-			messages = clanMessages.data;
-			chatBox.scrollTop = chatBox.scrollHeight - chatBox.clientHeight;
-		});
-	}
-
 	function retrieveInvitesAndMembers() {
-		getInvites(clanId!).then((getInvites) => {
-			invites = getInvites.data;
-		});
+		if ([ClanMemberRole.Owner, ClanMemberRole.Administrator].includes(clanMember?.role)) {
+			getInvites(clanId!).then((getInvites) => {
+				invites = getInvites.data;
+			});
+		}
 		getMembers(clanId!).then((getMembers) => {
 			members = getMembers.data;
+			clanMember = members.find(m => m.user.id === $user.id)[0];
 		});
 	}
 
-	function sendMessage() {
-		sendChatMessage(clanId!, newChatMessage).then(() => {
-			newChatMessage = '';
-			retrieveMessages();
-		});
-	}
-
-	function onChatKeyPress(event) {
-		if (event.key === 'Enter') {
-			sendMessage();
-		}
-	}
+	let memberInterval;
 
 	let clanId: number | null = null;
 
 	let clan: Clan | null = null;
 	let members: ClanMember[] = [];
 	let invites: ClanInvite[] = [];
-	let messages: ClanChatMessage[] = [];
 
-	let showInvites: boolean = false;
+	let showMembers: boolean = false;
 
-	let newChatMessage: string = '';
-	let chatBox: HTMLDivElement;
-	let messageRetrieveInterval;
+	let clanMember: ClanMember;
 
 	onDestroy(() => {
-		clearInterval(messageRetrieveInterval);
+		clearInterval(memberInterval);
 	});
+
+	$: {
+		if (browser) {
+			alert(clanMember?.role);
+		}
+	}
 
 </script>
 
@@ -84,7 +74,7 @@
 	<div class="flex items-center">
 		<span class="page-header mr-auto">{clan.name}</span>
 		<button
-			onclick="{() => showInvites = !showInvites}"
+			onclick="{() => showMembers = !showMembers}"
 			class="w-12 h-12 flex items-center justify-center hover:bg-zinc-100 transition-colors rounded-full">
 			<span class="block relative">
 				<PeopleIcon />
@@ -99,80 +89,61 @@
 		</a>
 	</div>
 
-	{#if showInvites}
-		<div in:fade
-				 class="flex gap-2 w-full h-32 mb-5 overflow-clip items-center border-y py-3 dark:border-zinc-800 border-zinc-200">
-			{#if invites.length === 0}
-				<small class="block w-full text-zinc-500 text-center">No invites yet.</small>
-			{/if}
-			{#each invites as invite}
-				<div class="w-56 dark:bg-zinc-900 bg-zinc-100 gap-5 h-full p-3 rounded-xl flex-row flex">
-					<div class="block">
-						<img src="{invite.user.profile.profilePicture}" class="h-14 w-14 bg-zinc-800 p-1 block mx-auto rounded-full"
-								 alt="pfp">
-						<span class="text-xs block text-center font-medium mt-1">{invite.user.profile.displayName}</span>
-					</div>
-					<div class="flex flex-col flex-grow">
-						<span class="block text-sm font-medium">{invite.user.profile.displayName}</span>
-						<p class="text-sm text-zinc-300 block flex-grow">{invite.message ?? ''}</p>
-						<div class="flex gap-6">
-							<button
-								onclick="{() => {acceptInvite(invite.id); retrieveInvitesAndMembers()}}"
-								class="flex w-8 h-8 rounded-full justify-center items-center transition-colors hover:bg-green-500 cursor-pointer">
-								<AddIcon />
-							</button>
-							<button
-								onclick="{() => {denyInvite(invite.id); retrieveInvitesAndMembers()}}"
-								class="flex w-8 h-8 rounded-full justify-center items-center transition-colors hover:bg-red-500 cursor-pointer">
-								<RemoveIcon />
-							</button>
+	{#if showMembers}
+		<div class="flex gap-2 w-full h-32 mb-5 overflow-clip">
+			{#each members as member}
+				<div class="dark:bg-zinc-900 h-full aspect-square p-3 rounded-xl hover-effect cursor-pointer">
+					<img src="{member.user.profile.profilePicture}"
+							 class="h-14 w-14 dark:bg-zinc-800 p-1 block mx-auto rounded-full"
+							 alt="pfp">
+					<span
+						class:!bg-yellow-500={member.role === ClanMemberRole.Owner}
+						class:!bg-orange-500={member.role === ClanMemberRole.Administrator}
+						class="mt-1 text-xs block w-fit mx-auto px-1 rounded-full bg-zinc-100 text-zinc-950">{ClanMemberRole[member.role]}</span>
+					<span class="text-xs block text-center font-medium mt-1">{member.user.profile.displayName}</span>
+				</div>
+			{/each}
+		</div>
+		{#if [ClanMemberRole.Owner, ClanMemberRole.Administrator].includes(clanMember?.role)}
+			<div in:fade
+					 class="flex gap-2 w-full h-32 mb-5 overflow-clip items-center border-y py-3 dark:border-zinc-800 border-zinc-200">
+				{#if invites.length === 0}
+					<small class="block w-full text-zinc-500 text-center">No invites yet.</small>
+				{/if}
+				{#each invites as invite}
+					<div class="w-56 dark:bg-zinc-900 bg-zinc-100 gap-5 h-full p-3 rounded-xl flex-row flex">
+						<div class="block">
+							<img src="{invite.user.profile.profilePicture}"
+									 class="h-14 w-14 bg-zinc-800 p-1 block mx-auto rounded-full"
+									 alt="pfp">
+							<span class="text-xs block text-center font-medium mt-1">{invite.user.profile.displayName}</span>
+						</div>
+						<div class="flex flex-col flex-grow">
+							<span class="block text-sm font-medium">{invite.user.profile.displayName}</span>
+							<p class="text-sm text-zinc-300 block flex-grow">{invite.message ?? ''}</p>
+							<div class="flex gap-6">
+								<button
+									onclick="{() => {acceptInvite(invite.id).then(() => retrieveInvitesAndMembers())}}"
+									class="flex w-8 h-8 rounded-full justify-center items-center transition-colors hover:bg-green-500 cursor-pointer">
+									<AddIcon />
+								</button>
+								<button
+									onclick="{() => {denyInvite(invite.id).then(() => retrieveInvitesAndMembers())}}"
+									class="flex w-8 h-8 rounded-full justify-center items-center transition-colors hover:bg-red-500 cursor-pointer">
+									<RemoveIcon />
+								</button>
+							</div>
 						</div>
 					</div>
-				</div>
-			{/each}
-		</div>
+				{/each}
+			</div>
+		{/if}
+
+
 	{/if}
 
-	<div class="flex gap-2 w-full h-32 mb-5 overflow-clip">
-		{#each members as member}
-			<div class="dark:bg-zinc-900 h-full aspect-square p-3 rounded-xl hover-effect cursor-pointer">
-				<img src="{member.user.profile.profilePicture}"
-						 class="h-14 w-14 dark:bg-zinc-800 p-1 block mx-auto rounded-full"
-						 alt="pfp">
-				<span
-					class:!bg-yellow-500={member.role === ClanMemberRole.Owner}
-					class:!bg-orange-500={member.role === ClanMemberRole.Administrator}
-					class="mt-1 text-xs block w-fit mx-auto px-1 rounded-full bg-zinc-100 text-zinc-950">{ClanMemberRole[member.role]}</span>
-				<span class="text-xs block text-center font-medium mt-1">{member.user.profile.displayName}</span>
-			</div>
-		{/each}
-	</div>
 
-	<div class="w-full p-5 dark:bg-zinc-900 bg-zinc-100 rounded-xl flex flex-col gap-4 h-72 overflow-y-auto">
-		<div class="flex flex-col h-60 gap-4 overflow-auto scrollbar-none" bind:this={chatBox}>
-			{#each messages.sort(m => Number(m.created)).reverse() as message}
-				<div class="w-full block text-sm">
-					<div class="flex items-center gap-2 w-full py-1">
-						<img src="{message.clanMember.user.profile.profilePicture}" alt="pfp" class="w-6 h-6 rounded-full">
-						<span class="block">{message.clanMember.user.profile.displayName}</span>
-						<span
-							class="block h-5 px-1 rounded-full bg-zinc-100 text-zinc-900 text-sm">{ClanMemberRole[message.clanMember.role]}</span>
-					</div>
-					<p class="ml-8">{message.message}</p>
-				</div>
-			{/each}
-		</div>
-
-		<div class="flex items-center text-zinc-100 mt-auto dark:bg-zinc-950 bg-zinc-50 px-3 py-1 rounded-xl gap-2">
-			<input onkeydown="{onChatKeyPress}" bind:value={newChatMessage} type="text"
-						 class="block text-sm w-full p-0 rounded-none border-none bg-transparent"
-						 placeholder="Enter message...">
-			<button onclick="{sendMessage}"
-							class="hover:border-zinc-100 border-1 p-2 rounded-xl transition-colors">
-				<SendIcon />
-			</button>
-		</div>
-	</div>
+	<ChatBox clanId="{clanId}" />
 
 
 {/if}

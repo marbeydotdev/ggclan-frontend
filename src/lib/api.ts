@@ -6,6 +6,7 @@ import { settings } from '$lib/configuration';
 import { browser } from '$app/environment';
 
 export type User = {
+	id: number;
 	created: string;
 	clans: never[];
 	profile: { displayName: string; profilePicture: string };

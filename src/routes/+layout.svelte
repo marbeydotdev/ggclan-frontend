@@ -8,7 +8,7 @@
 
 {#if browser}
 	<div
-		class="sticky -top-9 backdrop-blur-xl bg-zinc-50/80 dark:bg-zinc-950/70 z-50 dark:from-orange-950/40 to-transparent from-zinc-200 bg-gradient-to-b">
+		class="sticky -top-9 backdrop-blur-xl bg-zinc-50/80 dark:bg-zinc-950/70 z-50 dark:from-orange-950/40 to-transparent from-zinc-100 dark:bg-gradient-to-b">
 		<div
 			class="block breakpoints pt-16 pb-4 mx-auto ">
 			<Navigation />

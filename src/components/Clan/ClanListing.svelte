@@ -2,7 +2,6 @@
 	import { type Clan, type ClanMember, getMembers } from '$lib/api';
 	import ArrowIcon from 'virtual:icons/mdi/menu-right';
 	import { ready } from '$lib/auth';
-	import ClanList from './ClanList.svelte';
 
 	export let ClanListing: Clan;
 

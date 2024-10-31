@@ -1,5 +1,4 @@
 <script lang="ts">
-	import ArrowIcon from 'virtual:icons/mdi/arrow-right-circle-outline';
 	import { type Clan, getMyClans } from '$lib/api';
 	import { ready } from '$lib/auth';
 	import ClanListing from './ClanListing.svelte';
