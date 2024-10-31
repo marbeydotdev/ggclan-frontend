@@ -46,5 +46,5 @@
 
 {#if !loading && clans.length === 0}
 	<span class="block text-sm text-zinc-300">no clans have been created yet. <a class="text-blue-500 hover-effect"
-																																							 href="/app/clan/create">make one!</a></span>
+																																							 href="/app/clans/create">make one!</a></span>
 {/if}

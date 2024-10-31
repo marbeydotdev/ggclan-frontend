@@ -1,4 +1,4 @@
-import axios, { type AxiosInstance } from 'axios';
+import axios, { AxiosError, type AxiosInstance } from 'axios';
 import { toast, toastType } from '$lib/toasts';
 import { token, user } from '$lib/auth';
 import { get } from 'svelte/store';
@@ -96,7 +96,12 @@ function addIntercepts(apiObj: AxiosInstance) {
 			// Optional: Do something with response data
 			return response;
 		},
-		function (error) {
+		function (error: AxiosError) {
+			if (error.status === 401) {
+				token.set(null);
+				toast('You were logged out.', toastType.Warning);
+				return Promise.reject(error);
+			}
 			toast(error.message, toastType.Error);
 			return Promise.reject(error);
 		}
