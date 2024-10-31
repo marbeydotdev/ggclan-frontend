@@ -8,7 +8,7 @@
 	function retrieveMessages() {
 		console.log(clanId);
 		getMessages(clanId.valueOf()).then((clanMessages) => {
-			messages = clanMessages.data.sort(m => Number(m.created)).reverse();
+			messages = (clanMessages.data as ClanChatMessage[]).sort(m => Number(m.created)).reverse();
 			chatBox.scrollTop = chatBox.scrollHeight - chatBox.clientHeight;
 		});
 	}
@@ -20,7 +20,7 @@
 		});
 	}
 
-	function onChatKeyPress(event) {
+	function onChatKeyPress(event: KeyboardEvent) {
 		if (event.key === 'Enter') {
 			sendMessage();
 		}
@@ -28,7 +28,7 @@
 
 	let newChatMessage: string = $state('');
 	let chatBox: HTMLDivElement;
-	let messageRetrieveInterval;
+	let messageRetrieveInterval: ReturnType<typeof setInterval>;
 	let messages: ClanChatMessage[] = $state([]);
 
 	onMount(() => {
@@ -46,9 +46,12 @@
 			<div class="w-full block text-sm">
 				<div class="flex items-center gap-2 w-full py-1">
 					<img src="{message.clanMember.user.profile.profilePicture}" alt="pfp" class="w-6 h-6 rounded-full">
-					<span class="block">{message.clanMember.user.profile.displayName}</span>
 					<span
-						class="block h-5 px-1 rounded-full bg-zinc-100 text-zinc-900 text-sm">{ClanMemberRole[message.clanMember.role]}</span>
+						class="block h-5 px-1 rounded-full bg-zinc-100 text-zinc-900 text-sm"
+						class:!bg-yellow-500={message.clanMember.role === ClanMemberRole.Owner}
+						class:!bg-orange-500={message.clanMember.role === ClanMemberRole.Administrator}>{ClanMemberRole[message.clanMember.role]}</span>
+					<span class="block">{message.clanMember.user.profile.displayName}</span>
+
 				</div>
 				<p class="ml-8">{message.message}</p>
 			</div>

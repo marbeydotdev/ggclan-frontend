@@ -45,7 +45,7 @@
 				 type="text">
 	<div class="flex items-center mb-3 justify-between px-4">
 		<span class="mr-auto text-zinc-400">Private</span>
-		<input type="checkbox" class="w-6 h-6 rounded-full overflow-clip cursor-pointer blur dark:invert-0 invert"
+		<input type="checkbox" class="w-6 h-6"
 					 bind:checked={newPrivate} />
 	</div>
 	<textarea bind:value={newDescription} class="h-32 mb-2 w-full"

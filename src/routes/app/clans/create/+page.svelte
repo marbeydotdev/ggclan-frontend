@@ -51,15 +51,16 @@
 				 type="text">
 	<div class="flex items-center mb-3 justify-between px-4">
 		<span class="mr-auto text-zinc-400">Private</span>
-		<input type="checkbox" class="w-6 h-6 rounded-full overflow-clip cursor-pointer blur dark:invert-0 invert"
-					 bind:checked={newPrivate} />
+		<button class:bg-red-500={newPrivate}
+						class:bg-green-500={!newPrivate}
+						on:click="{() => newPrivate = !newPrivate}"
+						class="w-12 h-8 text-sm rounded-full">{newPrivate ? 'yes' : 'no'}</button>
 	</div>
 	<textarea bind:value={newDescription} class="h-32 mb-2 w-full"
 						placeholder="Description"></textarea>
 	<GamePicker multiple="{false}" bind:selected="{selected}" />
 	<div class="flex items-center mt-3 gap-2">
 		<button on:click={create} class="button">
-			<CreateIcon />
 			create
 		</button>
 
