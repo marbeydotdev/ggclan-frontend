@@ -55,6 +55,12 @@
 		});
 	}
 
+	function onChatKeyPress(event) {
+		if (event.key === 'Enter') {
+			sendMessage();
+		}
+	}
+
 	let clanId: number | null = null;
 
 	let clan: Clan | null = null;
@@ -84,7 +90,7 @@
 				<PeopleIcon />
 				<span
 					class:!flex={invites.length > 0}
-					class="text-xs  justify-center items-center rounded-full bg-red-500 w-4 h-4 absolute top-3 left-2 hidden">{invites.length}</span>
+					class="text-xs text-zinc-100 dark:text-zinc-950 justify-center items-center rounded-full bg-red-500 w-4 h-4 absolute top-3 left-2 hidden">{invites.length}</span>
 			</span>
 		</button>
 		<a href="/app/clans"
@@ -94,12 +100,13 @@
 	</div>
 
 	{#if showInvites}
-		<div in:fade class="flex gap-2 w-full h-32 mb-5 overflow-clip items-center border-y py-3 border-zinc-800">
+		<div in:fade
+				 class="flex gap-2 w-full h-32 mb-5 overflow-clip items-center border-y py-3 dark:border-zinc-800 border-zinc-200">
 			{#if invites.length === 0}
 				<small class="block w-full text-zinc-500 text-center">No invites yet.</small>
 			{/if}
 			{#each invites as invite}
-				<div class="w-56 bg-zinc-900 gap-5 h-full p-3 rounded-xl flex-row flex">
+				<div class="w-56 dark:bg-zinc-900 bg-zinc-100 gap-5 h-full p-3 rounded-xl flex-row flex">
 					<div class="block">
 						<img src="{invite.user.profile.profilePicture}" class="h-14 w-14 bg-zinc-800 p-1 block mx-auto rounded-full"
 								 alt="pfp">
@@ -107,15 +114,15 @@
 					</div>
 					<div class="flex flex-col flex-grow">
 						<span class="block text-sm font-medium">{invite.user.profile.displayName}</span>
-						<p class="text-sm text-zinc-300 block flex-grow">message</p>
+						<p class="text-sm text-zinc-300 block flex-grow">{invite.message ?? ''}</p>
 						<div class="flex gap-6">
 							<button
-								onclick="{() => {denyInvite(invite.id); retrieveInvitesAndMembers()}}"
+								onclick="{() => {acceptInvite(invite.id); retrieveInvitesAndMembers()}}"
 								class="flex w-8 h-8 rounded-full justify-center items-center transition-colors hover:bg-green-500 cursor-pointer">
 								<AddIcon />
 							</button>
 							<button
-								onclick="{() => {acceptInvite(invite.id); retrieveInvitesAndMembers()}}"
+								onclick="{() => {denyInvite(invite.id); retrieveInvitesAndMembers()}}"
 								class="flex w-8 h-8 rounded-full justify-center items-center transition-colors hover:bg-red-500 cursor-pointer">
 								<RemoveIcon />
 							</button>
@@ -128,8 +135,9 @@
 
 	<div class="flex gap-2 w-full h-32 mb-5 overflow-clip">
 		{#each members as member}
-			<div class="bg-zinc-900 h-full aspect-square p-3 rounded-xl hover-effect cursor-pointer">
-				<img src="{member.user.profile.profilePicture}" class="h-14 w-14 bg-zinc-800 p-1 block mx-auto rounded-full"
+			<div class="dark:bg-zinc-900 h-full aspect-square p-3 rounded-xl hover-effect cursor-pointer">
+				<img src="{member.user.profile.profilePicture}"
+						 class="h-14 w-14 dark:bg-zinc-800 p-1 block mx-auto rounded-full"
 						 alt="pfp">
 				<span
 					class:!bg-yellow-500={member.role === ClanMemberRole.Owner}
@@ -140,7 +148,7 @@
 		{/each}
 	</div>
 
-	<div class="w-full p-5 bg-zinc-900 rounded-xl flex flex-col gap-4 h-72 overflow-y-auto">
+	<div class="w-full p-5 dark:bg-zinc-900 bg-zinc-100 rounded-xl flex flex-col gap-4 h-72 overflow-y-auto">
 		<div class="flex flex-col h-60 gap-4 overflow-auto scrollbar-none" bind:this={chatBox}>
 			{#each messages.sort(m => Number(m.created)).reverse() as message}
 				<div class="w-full block text-sm">
@@ -155,8 +163,10 @@
 			{/each}
 		</div>
 
-		<div class="flex items-center text-zinc-100 mt-auto bg-zinc-950 px-3 py-2 rounded-xl gap-2">
-			<input bind:value={newChatMessage} type="text" class="block w-full p-0 rounded-none border-none bg-transparent">
+		<div class="flex items-center text-zinc-100 mt-auto dark:bg-zinc-950 bg-zinc-50 px-3 py-1 rounded-xl gap-2">
+			<input onkeydown="{onChatKeyPress}" bind:value={newChatMessage} type="text"
+						 class="block text-sm w-full p-0 rounded-none border-none bg-transparent"
+						 placeholder="Enter message...">
 			<button onclick="{sendMessage}"
 							class="hover:border-zinc-100 border-1 p-2 rounded-xl transition-colors">
 				<SendIcon />
