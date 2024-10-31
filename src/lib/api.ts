@@ -163,9 +163,15 @@ export async function createClan(name: string, description: string, priv: boolea
 	return result;
 }
 
-export async function getMessages(clanId: number, skip: number = 0, limit: number = 20) {
+export async function getMessages(
+	clanId: number,
+	skip: number = 0,
+	limit: number = 20,
+	lastId: number | null = null
+) {
 	const result = await apiFactory()!.get('/chat/messages/' + clanId, {
-		params: { limit: limit, skip: skip }
+		params:
+			lastId == null ? { limit: limit, skip: skip } : { limit: limit, skip: skip, afterId: lastId }
 	});
 	if (result.status !== 200) {
 		toast('Failed to get messages.', toastType.Error);

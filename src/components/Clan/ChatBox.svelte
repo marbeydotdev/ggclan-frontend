@@ -6,14 +6,23 @@
 	let { clanId }: { clanId: number } = $props();
 
 	function retrieveMessages() {
-		console.log(clanId);
-		getMessages(clanId.valueOf()).then((clanMessages) => {
-			messages = (clanMessages.data as ClanChatMessage[]).sort(m => Number(m.created)).reverse();
+		getMessages(clanId.valueOf(), 0, 20, lastId).then((clanMessages) => {
+			let msg = clanMessages.data as ClanChatMessage[];
+			messages.push(...msg);
+			messages.sort(m => Number(m.created));
+			if (messages.length > 0) {
+				lastId = messages.reduce((max, bericht) => {
+					return bericht.id > max ? bericht.id : max;
+				}, 0);
+			}
 			chatBox.scrollTop = chatBox.scrollHeight - chatBox.clientHeight;
 		});
 	}
 
 	function sendMessage() {
+		if (newChatMessage === '') {
+			return;
+		}
 		sendChatMessage(clanId, newChatMessage).then(() => {
 			newChatMessage = '';
 			retrieveMessages();
@@ -22,9 +31,12 @@
 
 	function onChatKeyPress(event: KeyboardEvent) {
 		if (event.key === 'Enter') {
+
 			sendMessage();
 		}
 	}
+
+	let lastId: number = 0;
 
 	let newChatMessage: string = $state('');
 	let chatBox: HTMLDivElement;
