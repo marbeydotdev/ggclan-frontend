@@ -4,6 +4,7 @@
 	import { token } from '$lib/auth';
 	import ButtonNavigation from '../components/Navigation/ButtonNavigation.svelte';
 	import { browser } from '$app/environment';
+	import '$lib/realtime';
 </script>
 
 {#if browser}

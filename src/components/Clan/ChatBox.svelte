@@ -2,21 +2,21 @@
 	import SendIcon from 'virtual:icons/mdi/send';
 	import { type ClanChatMessage, ClanMemberRole, getMessages, sendChatMessage } from '$lib/api';
 	import { onDestroy, onMount } from 'svelte';
+	import { connection, StartClanChatListen, StopClanChatListen } from '$lib/realtime';
 
 	let { clanId }: { clanId: number } = $props();
-
+	
 	function retrieveMessages() {
-		getMessages(clanId.valueOf(), 0, 20, lastId).then((clanMessages) => {
+		getMessages(clanId.valueOf(), 0, 20).then((clanMessages) => {
 			let msg = clanMessages.data as ClanChatMessage[];
 			messages.push(...msg);
-			messages.sort(m => Number(m.created));
-			if (messages.length > 0) {
-				lastId = messages.reduce((max, bericht) => {
-					return bericht.id > max ? bericht.id : max;
-				}, 0);
-			}
-			chatBox.scrollTop = chatBox.scrollHeight - chatBox.clientHeight;
+			messages.sort(m => Number(m.created)).reverse();
+			UglyAssScrollFix();
 		});
+	}
+
+	function UglyAssScrollFix() {
+		setTimeout(() => chatBox.scrollTop = chatBox.scrollHeight - chatBox.clientHeight, 10);
 	}
 
 	function sendMessage() {
@@ -24,8 +24,8 @@
 			return;
 		}
 		sendChatMessage(clanId, newChatMessage).then(() => {
+			UglyAssScrollFix();
 			newChatMessage = '';
-			retrieveMessages();
 		});
 	}
 
@@ -36,20 +36,24 @@
 		}
 	}
 
-	let lastId: number = 0;
+	connection.on('chatmessage', (newMessage: ClanChatMessage) => {
+		messages.push(newMessage);
+		UglyAssScrollFix();
+	});
 
 	let newChatMessage: string = $state('');
 	let chatBox: HTMLDivElement;
-	let messageRetrieveInterval: ReturnType<typeof setInterval>;
 	let messages: ClanChatMessage[] = $state([]);
 
 	onMount(() => {
 		retrieveMessages();
-		messageRetrieveInterval = setInterval(retrieveMessages, 1000);
+
+		StartClanChatListen(clanId);
 	});
 
 	onDestroy(() => {
-		clearInterval(messageRetrieveInterval);
+		StopClanChatListen(clanId);
+		connection.off('chatmessage');
 	});
 </script>
 <div class="w-full p-5 dark:bg-zinc-900 bg-zinc-100 rounded-xl flex flex-col gap-4 h-72 overflow-y-auto">
